@@ -104,8 +104,8 @@ st.markdown(
         box-shadow:-100px 190px 0 -90px var(--col-blue);
     }
     .hero::after {
-        content:"VIVI";position:absolute;right:42px;bottom:18px;color:#000;
-        font-size:92px;font-weight:900;letter-spacing:-8px;
+        content:"VIVI";position:absolute;right:42px;bottom:32px;color:#000;
+        font-size:72px;font-weight:900;letter-spacing:-6px;
         transform:rotate(-7deg);opacity:.92;
     }
     .hero-kicker {
@@ -381,7 +381,7 @@ st.markdown(
         color:var(--graphite);
         box-shadow:0 12px 28px rgba(0,103,177,.08);
     }
-    .dream-card h3, .ficha-sueno h3 {
+    .dream-card h3,    .ficha-sueno h3 {
         color:var(--col-blue);margin:0 0 var(--space-1);font-size:24px;
     }
     .dream-card p, .ficha-sueno p { margin:0;font-size:20px;line-height:1.6; }
@@ -504,8 +504,11 @@ st.markdown(
         .impact-grid { grid-template-columns:1fr; }
         .hero { min-height:420px;padding:var(--space-3); }
         .hero::before { width:230px;height:230px;right:-75px;top:-55px; }
-        .hero::after { right:20px;bottom:10px;font-size:58px; }
+        .hero::after { right:20px;bottom:24px;font-size:44px;letter-spacing:-4px; }
         [data-testid="stForm"] { padding:var(--space-2); }
+        .stage { font-size:11px;padding:8px 4px;min-height:40px; }
+        .ficha-sueno { margin:var(--space-1) 0 var(--space-2); }
+        .agent2-card { margin:var(--space-1) 0 var(--space-2); }
     }
     </style>
     """,
