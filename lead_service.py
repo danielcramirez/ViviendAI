@@ -11,6 +11,14 @@ from pathlib import Path
 from typing import Any, Iterator
 
 from finance_service import calculate_financial_profile
+from supabase_service import (
+    fetch_events as fetch_supabase_events,
+    fetch_leads as fetch_supabase_leads,
+    insert_event as insert_supabase_event,
+    patch_lead as patch_supabase_lead,
+    upsert_lead as upsert_supabase_lead,
+    use_supabase,
+)
 
 APP_DIR = Path(__file__).resolve().parent
 DB_PATH = APP_DIR / "leads.db"
@@ -95,12 +103,23 @@ def init_db() -> None:
             "colsubsidio_subsidy": "INTEGER DEFAULT 0",
             "concurrent_potential": "INTEGER DEFAULT 0",
             "max_monthly_payment": "INTEGER DEFAULT 0",
+            "telegram_username": "TEXT",
+            "conversation_profile_json": "TEXT",
+            "propensity_score": "INTEGER DEFAULT 0",
+            "propensity_priority": "TEXT",
+            "profile_diagnosis": "TEXT",
+            "profile_completed_at": "TEXT",
+            "consent": "INTEGER DEFAULT 0",
         }
         for column, sql_type in new_columns.items():
             if column not in existing_columns:
                 connection.execute(
                     f"ALTER TABLE META_LEADS_CAPTURE ADD COLUMN {column} {sql_type}"
                 )
+        connection.execute(
+            "CREATE INDEX IF NOT EXISTS idx_leads_id_number "
+            "ON META_LEADS_CAPTURE(id_number)"
+        )
 
 
 def _normalize_name(value: str) -> str:
@@ -175,7 +194,7 @@ def _salesforce_payload(lead: dict[str, Any], lead_code: str) -> dict[str, Any]:
         "Tipo_Afiliacion__c": lead.get("affiliation_type", "No informado"),
         "Horizonte_Compra__c": lead.get("purchase_horizon", "No informado"),
         "Ahorro_Declarado__c": lead.get("savings_range", "No informado"),
-        "Proyecto_Interes__c": lead.get("preferred_project", "Por recomendar"),
+        "Proyecto_Origen__c": lead.get("preferred_project", "Por recomendar"),
         "Habitaciones_Deseadas__c": lead.get("bedrooms"),
         "Ingreso_Hogar__c": lead.get("income_monthly", 0),
         "Subsidio_Colsubsidio_Estimado__c": lead.get("colsubsidio_subsidy", 0),
@@ -191,6 +210,7 @@ def _salesforce_payload(lead: dict[str, Any], lead_code: str) -> dict[str, Any]:
         "UTM_Campaign__c": lead.get("utm_campaign", ""),
         "UTM_Content__c": lead.get("utm_content", ""),
         "Resumen_del_Sueno__c": lead.get("commercial_summary", ""),
+        "Consentimiento_Datos__c": bool(lead.get("consent", False)),
         "Codigo_Externo__c": lead_code,
     }
 
@@ -216,6 +236,56 @@ def _event(
             datetime.now().isoformat(timespec="seconds"),
         ),
     )
+
+
+def _local_lead(lead_code: str) -> dict[str, Any]:
+    with _connection() as connection:
+        row = connection.execute(
+            "SELECT * FROM META_LEADS_CAPTURE WHERE lead_code = ?",
+            (lead_code,),
+        ).fetchone()
+    if not row:
+        raise ValueError(f"No existe el lead {lead_code}.")
+    return dict(row)
+
+
+def _register_sync_failure(lead_code: str, operation: str, error: Exception) -> None:
+    """Keep the demo available and leave an auditable local error."""
+    with _connection() as connection:
+        _event(
+            connection,
+            lead_code,
+            "SUPABASE_SYNC",
+            "FAILED",
+            {"operation": operation, "error": str(error)[:500]},
+        )
+
+
+def _sync_full_lead(lead_code: str) -> str | None:
+    if not use_supabase():
+        return None
+    try:
+        upsert_supabase_lead(_local_lead(lead_code))
+        insert_supabase_event(
+            lead_code,
+            "SUPABASE_SYNC",
+            "SUCCESS",
+            {"operation": "UPSERT_LEAD"},
+        )
+    except RuntimeError as error:
+        _register_sync_failure(lead_code, "UPSERT_LEAD", error)
+        return str(error)
+    return None
+
+
+def get_storage_status() -> dict[str, Any]:
+    """Expose a safe status without returning URLs or credentials."""
+    enabled = use_supabase()
+    return {
+        "backend": "supabase" if enabled else "sqlite",
+        "cloud_enabled": enabled,
+        "local_backup": str(DB_PATH),
+    }
 
 
 def capture_lead(payload: dict[str, Any], simulate_latency: float = 1.5) -> dict[str, Any]:
@@ -258,14 +328,25 @@ def capture_lead(payload: dict[str, Any], simulate_latency: float = 1.5) -> dict
     )
 
     with _connection() as connection:
-        previous = connection.execute(
-            """
-            SELECT lead_code FROM META_LEADS_CAPTURE
-            WHERE normalized_name = ?
-            ORDER BY id DESC LIMIT 1
-            """,
-            (normalized_name,),
-        ).fetchone()
+        id_number = str(payload.get("id_number", "")).strip()
+        if id_number:
+            previous = connection.execute(
+                """
+                SELECT lead_code FROM META_LEADS_CAPTURE
+                WHERE id_number = ?
+                ORDER BY id DESC LIMIT 1
+                """,
+                (id_number,),
+            ).fetchone()
+        else:
+            previous = connection.execute(
+                """
+                SELECT lead_code FROM META_LEADS_CAPTURE
+                WHERE normalized_name = ?
+                ORDER BY id DESC LIMIT 1
+                """,
+                (normalized_name,),
+            ).fetchone()
 
         cursor = connection.execute(
             """
@@ -274,8 +355,8 @@ def capture_lead(payload: dict[str, Any], simulate_latency: float = 1.5) -> dict
                 affiliated, negative_report, source, campaign, score, rating,
                 duplicate_of, crm_status, created_at, id_number, affiliation_type,
                 purchase_horizon, savings_range, preferred_project, bedrooms,
-                commercial_summary
-            ) VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'PENDING', ?, ?, ?, ?, ?, ?, ?, ?)
+                commercial_summary, telegram_username, consent
+            ) VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'PENDING', ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
             """,
             (
                 full_name,
@@ -297,6 +378,8 @@ def capture_lead(payload: dict[str, Any], simulate_latency: float = 1.5) -> dict
                 payload.get("preferred_project", ""),
                 payload.get("bedrooms"),
                 commercial_summary,
+                payload.get("telegram_username", ""),
+                int(bool(payload.get("consent", False))),
             ),
         )
         lead_code = f"LEAD-{cursor.lastrowid:05d}"
@@ -316,7 +399,7 @@ def capture_lead(payload: dict[str, Any], simulate_latency: float = 1.5) -> dict
         connection.execute(
             """
             UPDATE META_LEADS_CAPTURE
-            SET lead_code = ?, crm_payload = ?, crm_status = 'SYNCED',
+            SET lead_code = ?, crm_payload = ?, crm_status = 'PROFILE_PENDING',
                 income_monthly = ?, campaign_id = ?, adset_id = ?, ad_id = ?,
                 form_id = ?, meta_lead_id = ?, utm_source = ?, utm_medium = ?,
                 utm_campaign = ?, utm_content = ?, funnel_status = 'NUEVO',
@@ -343,10 +426,28 @@ def capture_lead(payload: dict[str, Any], simulate_latency: float = 1.5) -> dict
                 cursor.lastrowid,
             ),
         )
-        _event(connection, lead_code, "META_WEBHOOK", "RECEIVED", payload)
+        _event(
+            connection,
+            lead_code,
+            "META_WEBHOOK",
+            "RECEIVED",
+            {
+                "campaign_id": payload.get("campaign_id", ""),
+                "ad_id": payload.get("ad_id", ""),
+                "form_id": payload.get("form_id", ""),
+                "utm_source": payload.get("utm_source", ""),
+            },
+        )
         _event(connection, lead_code, "SQLITE_INSERT", "SUCCESS", {"table": "META_LEADS_CAPTURE"})
-        _event(connection, lead_code, "SALESFORCE_SYNC", "SIMULATED", crm_payload)
+        _event(
+            connection,
+            lead_code,
+            "SALESFORCE_SYNC",
+            "WAITING_PROFILE",
+            {"reason": "VIVI debe completar el perfilamiento antes del envío."},
+        )
 
+    storage_warning = _sync_full_lead(lead_code)
     return {
         "lead_code": lead_code,
         "score": score,
@@ -354,16 +455,24 @@ def capture_lead(payload: dict[str, Any], simulate_latency: float = 1.5) -> dict
         "recommendation": recommendation,
         "duplicate": previous is not None,
         "duplicate_of": previous["lead_code"] if previous else None,
-        "crm_status": "SYNCED",
+        "crm_status": "PROFILE_PENDING",
         "crm_payload": crm_payload,
         "commercial_summary": commercial_summary,
         "meta_lead_id": meta_lead_id,
         "financial_profile": financial,
+        "storage_backend": "supabase" if use_supabase() else "sqlite",
+        "storage_warning": storage_warning,
     }
 
 
 def list_leads() -> list[dict[str, Any]]:
     init_db()
+    if use_supabase():
+        try:
+            return fetch_supabase_leads()
+        except RuntimeError:
+            # Continuidad operativa: la copia local conserva el último estado.
+            pass
     with _connection() as connection:
         rows = connection.execute(
             """
@@ -374,11 +483,101 @@ def list_leads() -> list[dict[str, Any]]:
                    crm_status, funnel_status, campaign_id, adset_id, ad_id,
                    form_id, utm_source, utm_medium, utm_campaign, utm_content,
                    colsubsidio_subsidy, concurrent_potential,
-                   max_monthly_payment, commercial_summary, created_at
+                   max_monthly_payment, commercial_summary, created_at,
+                   telegram_username, propensity_score, propensity_priority,
+                   profile_diagnosis, profile_completed_at
             FROM META_LEADS_CAPTURE ORDER BY id DESC
             """
         ).fetchall()
     return [dict(row) for row in rows]
+
+
+def save_conversation_profile(
+    lead_code: str,
+    profile: dict[str, Any],
+    scoring: dict[str, Any],
+    diagnosis: str,
+) -> str:
+    """Persist VIVI's auditable profile and simulate Salesforce only when complete."""
+    init_db()
+    completed = bool(profile.get("profile_complete"))
+    status = "SYNCED" if completed else "PROFILE_PENDING"
+    completed_at = datetime.now().isoformat(timespec="seconds") if completed else None
+    with _connection() as connection:
+        row = connection.execute(
+            "SELECT crm_payload FROM META_LEADS_CAPTURE WHERE lead_code = ?",
+            (lead_code,),
+        ).fetchone()
+        if not row:
+            raise ValueError(f"No existe el lead {lead_code}.")
+        crm_payload = json.loads(row["crm_payload"] or "{}")
+        crm_payload.update(
+            {
+                "Puntaje_Perfilamiento__c": scoring["propensity_score"],
+                "Clasificacion_Lead__c": scoring["priority"],
+                "Version_Score__c": scoring["score_version"],
+                "Razones_Score__c": json.dumps(
+                    scoring["score_reasons"], ensure_ascii=False
+                ),
+                "Desglose_Score__c": json.dumps(
+                    scoring["score_breakdown"], ensure_ascii=False
+                ),
+                "Ruta_Comercial__c": scoring["route"],
+                "Ficha_del_Sueno__c": diagnosis,
+                "Perfil_Conversacional__c": json.dumps(profile, ensure_ascii=False),
+            }
+        )
+        connection.execute(
+            """
+            UPDATE META_LEADS_CAPTURE
+            SET conversation_profile_json = ?, propensity_score = ?,
+                propensity_priority = ?, profile_diagnosis = ?,
+                profile_completed_at = ?, crm_payload = ?, crm_status = ?
+            WHERE lead_code = ?
+            """,
+            (
+                json.dumps(profile, ensure_ascii=False),
+                scoring["propensity_score"],
+                scoring["priority"],
+                diagnosis,
+                completed_at,
+                json.dumps(crm_payload, ensure_ascii=False),
+                status,
+                lead_code,
+            ),
+        )
+        _event(
+            connection,
+            lead_code,
+            "VIVI_PROFILE",
+            "COMPLETED" if completed else "UPDATED",
+            {"profile": profile, "scoring": scoring, "diagnosis": diagnosis},
+        )
+        if completed:
+            _event(connection, lead_code, "SALESFORCE_SYNC", "SIMULATED", crm_payload)
+    if use_supabase():
+        try:
+            patch_supabase_lead(
+                lead_code,
+                {
+                    "conversation_profile_json": profile,
+                    "propensity_score": scoring["propensity_score"],
+                    "propensity_priority": scoring["priority"],
+                    "profile_diagnosis": diagnosis,
+                    "profile_completed_at": completed_at,
+                    "crm_payload": crm_payload,
+                    "crm_status": status,
+                },
+            )
+            insert_supabase_event(
+                lead_code,
+                "VIVI_PROFILE",
+                "COMPLETED" if completed else "UPDATED",
+                {"profile": profile, "scoring": scoring, "diagnosis": diagnosis},
+            )
+        except RuntimeError as error:
+            _register_sync_failure(lead_code, "SAVE_CONVERSATION_PROFILE", error)
+    return status
 
 
 def update_funnel_status(lead_code: str, status: str) -> None:
@@ -394,11 +593,24 @@ def update_funnel_status(lead_code: str, status: str) -> None:
     if status not in allowed:
         raise ValueError("Estado comercial no válido.")
     with _connection() as connection:
-        connection.execute(
+        cursor = connection.execute(
             "UPDATE META_LEADS_CAPTURE SET funnel_status = ? WHERE lead_code = ?",
             (status, lead_code),
         )
+        if cursor.rowcount == 0:
+            raise ValueError(f"No existe el lead {lead_code}.")
         _event(connection, lead_code, "SALESFORCE_STAGE", "SIMULATED", {"status": status})
+    if use_supabase():
+        try:
+            patch_supabase_lead(lead_code, {"funnel_status": status})
+            insert_supabase_event(
+                lead_code,
+                "SALESFORCE_STAGE",
+                "SIMULATED",
+                {"status": status},
+            )
+        except RuntimeError as error:
+            _register_sync_failure(lead_code, "UPDATE_FUNNEL_STATUS", error)
 
 
 def get_campaign_performance() -> list[dict[str, Any]]:
@@ -432,6 +644,11 @@ def get_campaign_performance() -> list[dict[str, Any]]:
 
 def list_events(limit: int = 100) -> list[dict[str, Any]]:
     init_db()
+    if use_supabase():
+        try:
+            return fetch_supabase_events(limit)
+        except RuntimeError:
+            pass
     with _connection() as connection:
         rows = connection.execute(
             """
@@ -445,6 +662,26 @@ def list_events(limit: int = 100) -> list[dict[str, Any]]:
 
 def get_dashboard_metrics() -> dict[str, float | int]:
     init_db()
+    if use_supabase():
+        try:
+            leads = fetch_supabase_leads()
+            total = len(leads)
+            hot = sum(
+                lead.get("rating") in {"ALTA", "CALIENTE"} for lead in leads
+            )
+            return {
+                "total": total,
+                "hot": hot,
+                "duplicates": sum(
+                    bool(lead.get("duplicate_of")) for lead in leads
+                ),
+                "crm_pending": sum(
+                    lead.get("crm_status") != "SYNCED" for lead in leads
+                ),
+                "conversion_rate": (hot / total * 100) if total else 0.0,
+            }
+        except RuntimeError:
+            pass
     with _connection() as connection:
         row = connection.execute(
             """
@@ -471,7 +708,10 @@ def retry_crm_sync() -> int:
     init_db()
     with _connection() as connection:
         pending = connection.execute(
-            "SELECT lead_code, crm_payload FROM META_LEADS_CAPTURE WHERE crm_status != 'SYNCED'"
+            """
+            SELECT lead_code, crm_payload FROM META_LEADS_CAPTURE
+            WHERE crm_status != 'SYNCED' AND profile_completed_at IS NOT NULL
+            """
         ).fetchall()
         for row in pending:
             connection.execute(
@@ -485,4 +725,16 @@ def retry_crm_sync() -> int:
                 "SIMULATED",
                 json.loads(row["crm_payload"]),
             )
+    if use_supabase():
+        for row in pending:
+            try:
+                patch_supabase_lead(row["lead_code"], {"crm_status": "SYNCED"})
+                insert_supabase_event(
+                    row["lead_code"],
+                    "SALESFORCE_RETRY",
+                    "SIMULATED",
+                    json.loads(row["crm_payload"]),
+                )
+            except RuntimeError as error:
+                _register_sync_failure(row["lead_code"], "RETRY_CRM_SYNC", error)
     return len(pending)

@@ -29,6 +29,12 @@ class CampaignAndFinanceTests(unittest.TestCase):
         self.assertEqual(profile["colsubsidio_subsidy"], 0)
         self.assertFalse(profile["eligible_by_income"])
 
+    def test_zero_income_never_generates_a_subsidy(self):
+        profile = calculate_financial_profile(0, "Afiliado como trabajador")
+        self.assertEqual(profile["colsubsidio_subsidy"], 0)
+        self.assertEqual(profile["concurrent_potential"], 0)
+        self.assertFalse(profile["eligible_by_income"])
+
 
 if __name__ == "__main__":
     unittest.main()

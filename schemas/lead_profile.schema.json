@@ -1,0 +1,101 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "VIVI - ViviendAI Lead Profile",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "lead_code",
+    "campaign_id",
+    "project_origin",
+    "interest_origin_project",
+    "desired_features",
+    "consent",
+    "profile_complete"
+  ],
+  "properties": {
+    "lead_code": {"type": "string", "pattern": "^LEAD-[0-9]{5,}$"},
+    "customer_name": {"type": ["string", "null"], "maxLength": 150},
+    "telegram_chat_id": {"type": ["string", "null"]},
+    "channel": {"type": "string"},
+    "campaign_id": {"type": "string"},
+    "adset_id": {"type": ["string", "null"]},
+    "ad_id": {"type": ["string", "null"]},
+    "form_id": {"type": ["string", "null"]},
+    "utm_source": {"type": ["string", "null"]},
+    "utm_medium": {"type": ["string", "null"]},
+    "utm_campaign": {"type": ["string", "null"]},
+    "project_origin": {"type": "string"},
+    "interest_origin_project": {"type": ["boolean", "null"]},
+    "alternative_interest": {"type": ["string", "null"], "maxLength": 500},
+    "recommended_projects": {
+      "type": "array",
+      "items": {"type": "string"},
+      "maxItems": 3
+    },
+    "purchase_purpose": {"type": ["string", "null"], "maxLength": 500},
+    "lives_in": {"type": ["string", "null"], "maxLength": 200},
+    "preferred_location": {"type": ["string", "null"], "maxLength": 200},
+    "works_in": {"type": ["string", "null"], "maxLength": 200},
+    "household_size": {
+      "oneOf": [
+        {"type": "integer", "minimum": 1, "maximum": 30},
+        {"type": "string", "maxLength": 100},
+        {"type": "null"}
+      ]
+    },
+    "housing_dream": {"type": ["string", "null"], "maxLength": 1000},
+    "desired_features": {
+      "type": "array",
+      "items": {"type": "string", "maxLength": 120},
+      "maxItems": 10
+    },
+    "purchase_horizon": {
+      "type": ["string", "null"],
+      "enum": [
+        "En los próximos 6 meses",
+        "Entre 6 y 12 meses",
+        "En más de 12 meses",
+        "Estoy explorando",
+        null
+      ]
+    },
+    "savings_range": {
+      "type": ["string", "null"],
+      "enum": [
+        "Aún no tengo ahorro",
+        "Menos de $3 millones",
+        "Entre $3 y $10 millones",
+        "Más de $10 millones",
+        "Prefiero no responder",
+        null
+      ]
+    },
+    "household_income": {"type": ["integer", "null"], "minimum": 0},
+    "purchase_budget": {"type": ["integer", "null"], "minimum": 0},
+    "affiliation_type": {
+      "type": ["string", "null"],
+      "enum": ["Afiliado como trabajador", "Beneficiario", "No afiliado", null]
+    },
+    "bedrooms": {"type": ["integer", "null"], "minimum": 1, "maximum": 6},
+    "max_monthly_payment": {"type": ["integer", "null"], "minimum": 0},
+    "consent": {"type": "boolean"},
+    "accepts_advisor_contact": {"type": ["boolean", "null"]},
+    "accepts_appointment": {"type": ["boolean", "null"]},
+    "profile_complete": {"type": "boolean"},
+    "propensity_score": {"type": ["integer", "null"], "minimum": 0, "maximum": 100},
+    "propensity_priority": {
+      "type": ["string", "null"],
+      "enum": ["EN PERFILAMIENTO", "ALTA", "MEDIA", "NUTRICIÓN", "TEMPRANO", null]
+    },
+    "score_version": {"type": ["string", "null"]},
+    "missing_fields": {
+      "type": "array",
+      "items": {"type": "string"}
+    },
+    "diagnosis": {"type": ["string", "null"], "maxLength": 2000},
+    "agent_source": {"type": ["string", "null"]},
+    "integration_warning": {"type": ["string", "null"]},
+    "make_profile_seeded": {"type": ["boolean", "null"]},
+    "make_seed_warning": {"type": ["string", "null"]}
+  }
+}

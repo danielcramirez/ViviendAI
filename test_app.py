@@ -8,7 +8,7 @@ class StreamlitAppTests(unittest.TestCase):
         app = AppTest.from_file("app.py", default_timeout=10).run()
 
         self.assertEqual(len(app.exception), 0)
-        self.assertTrue(any("Visionario ViviendAI" in title.value for title in app.markdown))
+        self.assertTrue(any("VIVI · ViviendAI" in title.value for title in app.markdown))
         self.assertTrue(any(button.label == "Registrarte" for button in app.button))
 
     def test_legacy_rating_does_not_break_open_session(self):
@@ -26,7 +26,7 @@ class StreamlitAppTests(unittest.TestCase):
 
         self.assertEqual(len(app.exception), 0)
         self.assertTrue(
-            any("Prioridad comercial: MEDIA" in block.value for block in app.markdown)
+            any("Precalificación técnica inicial: 65/100" in block.value for block in app.markdown)
         )
 
 

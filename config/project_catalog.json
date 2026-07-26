@@ -1,0 +1,16 @@
+[
+  {"name":"Araucaria","type":"No VIS","location":"Bogotá, Calle 80","municipality":"Bogotá","price_from":994600000},
+  {"name":"Los Nogales","type":"No VIS","location":"Bogotá, Calle 80","municipality":"Bogotá","price_from":572523000},
+  {"name":"Samán","type":"VIS","location":"Ricaurte, Cundinamarca","municipality":"Ricaurte","price_from":258500000},
+  {"name":"Karakalí","type":"VIS","location":"Bogotá, Chapinero","municipality":"Bogotá","price_from":245126700},
+  {"name":"Reserva de Guayacán","type":"VIS","location":"Girardot, Cundinamarca","municipality":"Girardot","price_from":239500000},
+  {"name":"Inari","type":"VIS","location":"Chía, Cundinamarca","municipality":"Chía","price_from":204900000},
+  {"name":"Versalles","type":"VIS","location":"Soacha, Cundinamarca","municipality":"Soacha","price_from":214300000},
+  {"name":"Pamplona","type":"VIS","location":"Soacha, Cundinamarca","municipality":"Soacha","price_from":206407500},
+  {"name":"Payandé","type":"VIS","location":"Ricaurte, Cundinamarca","municipality":"Ricaurte","price_from":194524000},
+  {"name":"Bosque de Arrayán","type":"VIS","location":"Tocancipá, Cundinamarca","municipality":"Tocancipá","price_from":186763200},
+  {"name":"Monguí","type":"VIS","location":"Soacha, Cundinamarca","municipality":"Soacha","price_from":173491500},
+  {"name":"Verde Esperanza","type":"VIS","location":"Ubaté, Cundinamarca","municipality":"Ubaté","price_from":161800000},
+  {"name":"La Macarena","type":"VIS","location":"Soacha, Cundinamarca","municipality":"Soacha","price_from":149182800},
+  {"name":"La Arboleda","type":"VIS","location":"Bogotá, San Cristóbal","municipality":"Bogotá","price_from":145620000}
+]

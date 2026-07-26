@@ -1,0 +1,23 @@
+{
+  "object": "Lead",
+  "mode": "SIMULATED",
+  "field_mapping": {
+    "lead_id": "Codigo_Externo__c",
+    "telegram_chat_id": "Telegram_Chat_ID__c",
+    "campaign_id": "Campaign_ID__c",
+    "adset_id": "Ad_Set_ID__c",
+    "ad_id": "Ad_ID__c",
+    "form_id": "Form_ID__c",
+    "utm_source": "UTM_Source__c",
+    "utm_medium": "UTM_Medium__c",
+    "utm_campaign": "UTM_Campaign__c",
+    "project_origin": "Proyecto_Origen__c",
+    "recommended_projects": "Proyectos_Recomendados__c",
+    "profile_score": "Puntaje_Perfilamiento__c",
+    "score_classification": "Clasificacion_Lead__c",
+    "score_reasons": "Razones_Score__c",
+    "conversation_summary": "Resumen_del_Sueno__c",
+    "advisor_route": "Ruta_Comercial__c",
+    "consent": "Consentimiento_Datos__c"
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "version": "VIVI-1.0",
+  "maximum_score": 100,
+  "disclaimer": "Prioridad comercial explicable; no equivale a aprobación de crédito o subsidio.",
+  "dimensions": {
+    "intent": {"maximum": 25},
+    "horizon": {"maximum": 15},
+    "financial_readiness": {"maximum": 25},
+    "project_fit": {"maximum": 15},
+    "engagement": {"maximum": 10},
+    "next_step": {"maximum": 10}
+  },
+  "classification": {
+    "ALTA": {
+      "minimum": 80,
+      "route": "ASESOR_COMERCIAL"
+    },
+    "MEDIA": {
+      "minimum": 55,
+      "maximum": 79,
+      "route": "COMPLETAR_PERFIL"
+    },
+    "NUTRICIÓN": {
+      "minimum": 30,
+      "maximum": 54,
+      "route": "PERTENECER"
+    },
+    "TEMPRANO": {
+      "minimum": 0,
+      "maximum": 29,
+      "route": "NUTRICION_DIGITAL"
+    }
+  },
+  "never_score": [
+    "gender",
+    "ethnicity",
+    "disability",
+    "exact_address",
+    "employer_name_or_social_media_presence",
+    "refusal_to_answer_sensitive_questions"
+  ]
+}

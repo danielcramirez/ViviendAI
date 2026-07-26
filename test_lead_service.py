@@ -4,6 +4,7 @@ from pathlib import Path
 from unittest.mock import patch
 
 import lead_service
+from profiling_service import build_diagnosis, calculate_propensity
 
 
 SAMPLE = {
@@ -42,7 +43,39 @@ class LeadServiceTests(unittest.TestCase):
         self.assertEqual(result["lead_code"], "LEAD-00001")
         self.assertEqual(result["score"], 100)
         self.assertEqual(result["rating"], "ALTA")
-        self.assertEqual(result["crm_status"], "SYNCED")
+        self.assertEqual(result["crm_status"], "PROFILE_PENDING")
+
+    def test_syncs_to_salesforce_only_after_vivi_profile(self):
+        result = lead_service.capture_lead(SAMPLE, simulate_latency=0)
+        profile = {
+            "profile_complete": True,
+            "project_origin": SAMPLE["preferred_project"],
+            "interest_origin_project": True,
+            "alternative_interest": None,
+            "purchase_purpose": "Vivir con mi familia",
+            "lives_in": "Suba",
+            "works_in": "Calle 80",
+            "household_size": 4,
+            "housing_dream": "Balcón y zonas verdes",
+            "desired_features": ["Balcón", "zonas verdes"],
+            "purchase_horizon": SAMPLE["purchase_horizon"],
+            "household_income": SAMPLE["income_monthly"],
+            "savings_range": SAMPLE["savings_range"],
+            "max_monthly_payment": 1_200_000,
+            "affiliation_type": SAMPLE["affiliation_type"],
+            "accepts_advisor_contact": True,
+            "accepts_appointment": True,
+        }
+        scoring = calculate_propensity(profile)
+        diagnosis = build_diagnosis(profile, scoring)
+        status = lead_service.save_conversation_profile(
+            result["lead_code"], profile, scoring, diagnosis
+        )
+
+        self.assertEqual(status, "SYNCED")
+        stored = lead_service.list_leads()[0]
+        self.assertEqual(stored["crm_status"], "SYNCED")
+        self.assertEqual(stored["propensity_score"], scoring["propensity_score"])
 
     def test_detects_normalized_duplicate(self):
         lead_service.capture_lead(SAMPLE, simulate_latency=0)
@@ -51,6 +84,21 @@ class LeadServiceTests(unittest.TestCase):
         )
         self.assertTrue(duplicate["duplicate"])
         self.assertEqual(duplicate["duplicate_of"], "LEAD-00001")
+
+    def test_same_name_with_different_document_is_not_duplicate(self):
+        lead_service.capture_lead(SAMPLE, simulate_latency=0)
+        second = lead_service.capture_lead(
+            {**SAMPLE, "id_number": "1099999999"}, simulate_latency=0
+        )
+        self.assertFalse(second["duplicate"])
+
+    def test_retry_does_not_sync_an_incomplete_profile(self):
+        lead_service.capture_lead(SAMPLE, simulate_latency=0)
+        self.assertEqual(lead_service.retry_crm_sync(), 0)
+        self.assertEqual(
+            lead_service.list_leads()[0]["crm_status"],
+            "PROFILE_PENDING",
+        )
 
     def test_rejects_empty_name(self):
         with self.assertRaises(ValueError):

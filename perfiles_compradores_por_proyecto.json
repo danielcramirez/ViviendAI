@@ -1,0 +1,2438 @@
+{
+  "mongui": {
+    "nombre": "Monguí",
+    "ubicacion": {
+      "departamento": "Cundinamarca",
+      "municipio": "Monguí",
+      "localidades_principales": [
+        "Sin Información",
+        "Kennedy",
+        "Engativá",
+        "C. Bolivar"
+      ]
+    },
+    "demografia": {
+      "rango_salario": {
+        "hasta_2_smlv": 87.0,
+        "mas_de_2_smlv": 13.0
+      },
+      "genero": {
+        "femenino": 53.0,
+        "masculino": 47.0
+      },
+      "rango_edad": {
+        "20_a_35": 56.0,
+        "36_a_45": 26.0,
+        "otros": 18.0
+      },
+      "segmento": {
+        "joven": 22.0,
+        "basico": 39.0,
+        "medio": 39.0,
+        "alto": 0.0,
+        "sin_grupo": 0.0
+      },
+      "segmento_familia": {
+        "monoparental": 40.0,
+        "nuclear_integrada": 46.0,
+        "ampliada": 7.0,
+        "pareja_conyugal": 3.0,
+        "monoparental_ampliada": 2.0,
+        "sin_grupo": 2.0
+      },
+      "afiliacion": {
+        "afiliado": 66.0,
+        "no_afilado": 34.0
+      },
+      "estrato": {
+        "cero": 40.0,
+        "uno": 5.0,
+        "dos": 14.0,
+        "tres": 11.0,
+        "cuatro": 2.0
+      },
+      "pac": {
+        "cero": 40.0,
+        "uno": 28.0,
+        "dos": 22.0,
+        "tres": 7.0,
+        "cuatro": 2.0
+      }
+    },
+    "empresas": {
+      "segmento_empresas": {
+        "micro": 32.0,
+        "pequena": 0.0,
+        "mediana": 29.0,
+        "grande": 20.0,
+        "emp_top": 15.0,
+        "transaccional": 4.0,
+        "estandar": 0.0
+      },
+      "top_empresas": [
+        {
+          "nombre": "COLSUBSIDIO",
+          "porcentaje": 20
+        },
+        {
+          "nombre": "TELEPERFORMANCE",
+          "porcentaje": 16
+        },
+        {
+          "nombre": "TRANSPORTE INTEGRADO DE B",
+          "porcentaje": 8
+        },
+        {
+          "nombre": "SECURITAS COLOMBIA S A",
+          "porcentaje": 6
+        },
+        {
+          "nombre": "CONSORCIO EXPRESS S A S",
+          "porcentaje": 6
+        },
+        {
+          "nombre": "PERMODA LTDA",
+          "porcentaje": 5
+        },
+        {
+          "nombre": "ALFAGRES S.A.",
+          "porcentaje": 4
+        },
+        {
+          "nombre": "RECAUDO BOGOTA SAS",
+          "porcentaje": 3
+        },
+        {
+          "nombre": "ATENTO COLOMBIA S A",
+          "porcentaje": 3
+        },
+        {
+          "nombre": "MUEVE FONTIBON SAS",
+          "porcentaje": 3
+        },
+        {
+          "nombre": "C DE TRANSP DE FUSAGASUGA",
+          "porcentaje": 3
+        }
+      ]
+    },
+    "financiero": {
+      "entidades_financieras": {
+        "colsubsidio": 47.0,
+        "davivienda": 25.0,
+        "fna": 13.0,
+        "otros": 15.0
+      }
+    },
+    "metadata": {
+      "fecha_corte": "2026-01-15",
+      "proyecto_tipo": "Vivienda de Interés Social (VIS)",
+      "rango_precio_aprox": "No especificado"
+    }
+  },
+  "pamplona": {
+    "nombre": "Pamplona",
+    "ubicacion": {
+      "departamento": "Cundinamarca",
+      "municipio": "Pamplona",
+      "localidades_principales": [
+        "Sin Información",
+        "Bosa",
+        "Comuna 1",
+        "C. Bolivar"
+      ]
+    },
+    "demografia": {
+      "rango_salario": {
+        "hasta_2_smlv": 87.0,
+        "mas_de_2_smlv": 13.0
+      },
+      "genero": {
+        "femenino": 52.0,
+        "masculino": 48.0
+      },
+      "rango_edad": {
+        "20_a_35": 46.0,
+        "36_a_45": 30.0,
+        "otros": 24.0
+      },
+      "segmento": {
+        "joven": 18.0,
+        "basico": 42.0,
+        "medio": 40.0,
+        "alto": 0.0,
+        "sin_grupo": 0.0
+      },
+      "segmento_familia": {
+        "monoparental": 35.0,
+        "nuclear_integrada": 45.0,
+        "ampliada": 17.0,
+        "pareja_conyugal": 2.0,
+        "monoparental_ampliada": 1.0,
+        "sin_grupo": 0.0
+      },
+      "afiliacion": {
+        "afiliado": 65.0,
+        "no_afilado": 35.0
+      },
+      "estrato": {
+        "cero": 35.0,
+        "uno": 5.0,
+        "dos": 13.0,
+        "tres": 7.0,
+        "cuatro": 0.0
+      },
+      "pac": {
+        "cero": 35.0,
+        "uno": 27.0,
+        "dos": 23.0,
+        "tres": 13.0,
+        "cuatro": 1.0
+      }
+    },
+    "empresas": {
+      "segmento_empresas": {
+        "micro": 41.0,
+        "pequena": 0.0,
+        "mediana": 27.0,
+        "grande": 17.0,
+        "emp_top": 7.0,
+        "transaccional": 5.0,
+        "estandar": 3.0
+      },
+      "top_empresas": [
+        {
+          "nombre": "COLSUBSIDIO",
+          "porcentaje": 7
+        },
+        {
+          "nombre": "T INTEGRADO DE BOGOTA SAS",
+          "porcentaje": 4
+        },
+        {
+          "nombre": "CONSORCIO EXPRESS S A S",
+          "porcentaje": 3
+        },
+        {
+          "nombre": "P A S H SAS",
+          "porcentaje": 2
+        },
+        {
+          "nombre": "CLINICA COLSANITAS S.A.",
+          "porcentaje": 2
+        },
+        {
+          "nombre": "E SOMOS FONTIBON SAS",
+          "porcentaje": 2
+        },
+        {
+          "nombre": "KATHERINE ALSINA LIZARAZO",
+          "porcentaje": 1
+        },
+        {
+          "nombre": "U ANTONIO NARINO",
+          "porcentaje": 1
+        },
+        {
+          "nombre": "PRODUCTIVIDAD EMPRESARIA",
+          "porcentaje": 1
+        },
+        {
+          "nombre": "AUTOFINANCIERA COLOMBIA",
+          "porcentaje": 1
+        },
+        {
+          "nombre": "INVERSIONES EL CARNAL SAS",
+          "porcentaje": 1
+        }
+      ]
+    },
+    "financiero": {
+      "entidades_financieras": {
+        "colsubsidio": 22.0,
+        "davivienda": 36.0,
+        "colpatria": 11.0,
+        "otros": 31.0
+      }
+    },
+    "metadata": {
+      "fecha_corte": "2026-01-15",
+      "proyecto_tipo": "Vivienda de Interés Social (VIS)",
+      "rango_precio_aprox": "No especificado"
+    }
+  },
+  "reserva_guayacan": {
+    "nombre": "Reserva de Guayacán",
+    "ubicacion": {
+      "departamento": "Cundinamarca",
+      "municipio": "Girardot",
+      "localidades_principales": [
+        "Sin Información",
+        "Engativá",
+        "Kennedy",
+        "Bosa"
+      ]
+    },
+    "demografia": {
+      "rango_salario": {
+        "hasta_2_smlv": 68.0,
+        "mas_de_2_smlv": 32.0
+      },
+      "genero": {
+        "femenino": 50.0,
+        "masculino": 50.0
+      },
+      "rango_edad": {
+        "20_a_35": 56.0,
+        "36_a_45": 30.0,
+        "otros": 14.0
+      },
+      "segmento": {
+        "joven": 22.0,
+        "basico": 34.0,
+        "medio": 44.0,
+        "alto": 0.0,
+        "sin_grupo": 0.0
+      },
+      "segmento_familia": {
+        "monoparental": 26.0,
+        "nuclear_integrada": 10.0,
+        "ampliada": 16.0,
+        "pareja_conyugal": 0.0,
+        "monoparental_ampliada": 0.0,
+        "sin_grupo": 46.0
+      },
+      "afiliacion": {
+        "afiliado": 69.0,
+        "no_afilado": 31.0
+      },
+      "estrato": {
+        "cero": 46.0,
+        "uno": 0.0,
+        "dos": 14.0,
+        "tres": 20.0,
+        "cuatro": 0.0,
+        "cinco": 64.0
+      },
+      "pac": {
+        "cero": 46.0,
+        "uno": 36.0,
+        "dos": 14.0,
+        "tres": 4.0,
+        "cuatro": 0.0
+      }
+    },
+    "empresas": {
+      "segmento_empresas": {
+        "micro": 46.0,
+        "pequena": 0.0,
+        "mediana": 20.0,
+        "grande": 24.0,
+        "emp_top": 6.0,
+        "transaccional": 4.0,
+        "estandar": 0.0
+      },
+      "top_empresas": [
+        {
+          "nombre": "COLSUBSIDIO",
+          "porcentaje": 3
+        },
+        {
+          "nombre": "TELEPERFORMANCE",
+          "porcentaje": 2
+        },
+        {
+          "nombre": "MUNICIPIO DE GIRARDOT",
+          "porcentaje": 1
+        },
+        {
+          "nombre": "GRANYPROC S.A.S",
+          "porcentaje": 1
+        },
+        {
+          "nombre": "SERCONSTRUCTORES S.A.S.",
+          "porcentaje": 1
+        },
+        {
+          "nombre": "ALCIAUTOS LTDA",
+          "porcentaje": 1
+        },
+        {
+          "nombre": "JERONIMO MARTINS COLOMBI",
+          "porcentaje": 1
+        },
+        {
+          "nombre": "ANARKITECH SOLUCIONES",
+          "porcentaje": 1
+        },
+        {
+          "nombre": "RAMA JUDICIAL CONS SUP J",
+          "porcentaje": 1
+        },
+        {
+          "nombre": "ANGELA CONSUELO CUELLAR",
+          "porcentaje": 1
+        },
+        {
+          "nombre": "ADECCO SERVICIOS COLOMBI",
+          "porcentaje": 1
+        }
+      ]
+    },
+    "financiero": {
+      "entidades_financieras": {
+        "colsubsidio": 6.0,
+        "bbva": 50.0,
+        "banco_de_bogota": 24.0,
+        "otros": 20.0
+      }
+    },
+    "metadata": {
+      "fecha_corte": "2026-01-15",
+      "proyecto_tipo": "Vivienda de Interés Social (VIS)",
+      "rango_precio_aprox": "No especificado"
+    }
+  },
+  "reserva_saman": {
+    "nombre": "Reserva de Samán",
+    "ubicacion": {
+      "departamento": "Cundinamarca",
+      "municipio": "Bogotá D.C.",
+      "localidades_principales": [
+        "Sin Información",
+        "Engativá",
+        "Kennedy",
+        "Suba"
+      ]
+    },
+    "demografia": {
+      "rango_salario": {
+        "hasta_2_smlv": 64.0,
+        "mas_de_2_smlv": 36.0
+      },
+      "genero": {
+        "femenino": 59.0,
+        "masculino": 41.0
+      },
+      "rango_edad": {
+        "20_a_35": 41.0,
+        "36_a_45": 31.0,
+        "otros": 28.0
+      },
+      "segmento": {
+        "joven": 20.0,
+        "basico": 37.0,
+        "medio": 42.0,
+        "alto": 0.0,
+        "sin_grupo": 1.0
+      },
+      "segmento_familia": {
+        "monoparental": 37.0,
+        "nuclear_integrada": 15.0,
+        "ampliada": 2.0,
+        "pareja_conyugal": 0.0,
+        "monoparental_ampliada": 0.0,
+        "sin_grupo": 41.0
+      },
+      "afiliacion": {
+        "afiliado": 77.0,
+        "no_afilado": 23.0
+      },
+      "estrato": {
+        "cero": 37.0,
+        "uno": 0.0,
+        "dos": 20.0,
+        "tres": 12.0,
+        "cuatro": 2.0,
+        "cinco": 0.0,
+        "seis": 2.0
+      },
+      "pac": {
+        "cero": 37.0,
+        "uno": 25.0,
+        "dos": 20.0,
+        "tres": 12.0,
+        "cuatro": 0.0,
+        "cinco": 0.0
+      }
+    },
+    "empresas": {
+      "segmento_empresas": {
+        "micro": 39.0,
+        "pequena": 0.0,
+        "mediana": 22.0,
+        "grande": 22.0,
+        "emp_top": 12.0,
+        "transaccional": 5.0,
+        "estandar": 0.0
+      },
+      "top_empresas": [
+        {
+          "nombre": "COLSUBSIDIO",
+          "porcentaje": 6
+        },
+        {
+          "nombre": "GRUPO EMPRESARIAL EN LINE",
+          "porcentaje": 3
+        },
+        {
+          "nombre": "G DE CUNDINAMARCA",
+          "porcentaje": 2
+        },
+        {
+          "nombre": "DIREC DE IMP Y ADUAN NAL",
+          "porcentaje": 2
+        },
+        {
+          "nombre": "MAS TALENTO SAS",
+          "porcentaje": 1
+        },
+        {
+          "nombre": "INVERSIONES ANTRI S A",
+          "porcentaje": 1
+        },
+        {
+          "nombre": "SEGURIDAD LAGUS LTDA",
+          "porcentaje": 1
+        },
+        {
+          "nombre": "BANCO DAVIVIENDA S A",
+          "porcentaje": 1
+        },
+        {
+          "nombre": "L DE COSMETICOS SLENDY",
+          "porcentaje": 1
+        },
+        {
+          "nombre": "ACCENTURE LTDA",
+          "porcentaje": 1
+        },
+        {
+          "nombre": "MERCADOLIBRE COLOMBIA",
+          "porcentaje": 1
+        }
+      ]
+    },
+    "financiero": {
+      "entidades_financieras": {
+        "colsubsidio": 25.0,
+        "bbva": 29.0,
+        "banco_de_bogota": 20.0,
+        "otros": 26.0
+      }
+    },
+    "metadata": {
+      "fecha_corte": "2026-01-15",
+      "proyecto_tipo": "Vivienda de Interés Social (VIS)",
+      "rango_precio_aprox": "No especificado"
+    }
+  },
+  "inari": {
+    "nombre": "INARI",
+    "ubicacion": {
+      "departamento": "Cundinamarca",
+      "municipio": "Chía",
+      "localidades_principales": [
+        "Sin Información",
+        "Engativá",
+        "Suba",
+        "Chía"
+      ]
+    },
+    "demografia": {
+      "rango_salario": {
+        "hasta_2_smlv": 72.0,
+        "mas_de_2_smlv": 28.0
+      },
+      "genero": {
+        "femenino": 37.0,
+        "masculino": 63.0
+      },
+      "rango_edad": {
+        "20_a_35": 56.0,
+        "36_a_45": 26.0,
+        "otros": 18.0
+      },
+      "segmento": {
+        "joven": 34.0,
+        "basico": 38.0,
+        "medio": 28.0,
+        "alto": 0.0,
+        "sin_grupo": 0.0
+      },
+      "segmento_familia": {
+        "monoparental": 29.0,
+        "nuclear_integrada": 6.0,
+        "ampliada": 4.0,
+        "pareja_conyugal": 0.0,
+        "monoparental_ampliada": 0.0,
+        "sin_grupo": 57.0
+      },
+      "afiliacion": {
+        "afiliado": 64.0,
+        "no_afilado": 36.0
+      },
+      "estrato": {
+        "cero": 57.0,
+        "uno": 1.0,
+        "dos": 19.0,
+        "tres": 9.0,
+        "cuatro": 3.0,
+        "cinco": 1.0
+      },
+      "pac": {
+        "cero": 57.0,
+        "uno": 28.0,
+        "dos": 11.0,
+        "tres": 4.0,
+        "cuatro": 0.0
+      }
+    },
+    "empresas": {
+      "segmento_empresas": {
+        "micro": 38.0,
+        "pequena": 0.0,
+        "mediana": 25.0,
+        "grande": 17.0,
+        "emp_top": 17.0,
+        "transaccional": 2.0,
+        "estandar": 1.0
+      },
+      "top_empresas": [
+        {
+          "nombre": "COLSUBSIDIO",
+          "porcentaje": 7
+        },
+        {
+          "nombre": "G DE CUNDINAMARCA",
+          "porcentaje": 4
+        },
+        {
+          "nombre": "MONGIBELLO S.A.S.",
+          "porcentaje": 3
+        },
+        {
+          "nombre": "FLORES IPANEMA S.A.S",
+          "porcentaje": 2
+        },
+        {
+          "nombre": "IMAGE QUALITY OUTSOURCIN",
+          "porcentaje": 2
+        },
+        {
+          "nombre": "FORTOX S A",
+          "porcentaje": 2
+        },
+        {
+          "nombre": "CONSORCIO EXPRESS S A S",
+          "porcentaje": 2
+        },
+        {
+          "nombre": "AVSA S A",
+          "porcentaje": 2
+        },
+        {
+          "nombre": "KPMG S.A.S.",
+          "porcentaje": 2
+        },
+        {
+          "nombre": "PALMA DE ACEITE CENIPALMA",
+          "porcentaje": 2
+        },
+        {
+          "nombre": "U ANTONIO NARINO",
+          "porcentaje": 2
+        }
+      ]
+    },
+    "financiero": {
+      "entidades_financieras": {
+        "colsubsidio": 41.0,
+        "hipoteca": 33.0,
+        "davivienda": 11.0,
+        "otros": 15.0
+      }
+    },
+    "metadata": {
+      "fecha_corte": "2026-01-15",
+      "proyecto_tipo": "Vivienda de Interés Social (VIS)",
+      "rango_precio_aprox": "No especificado"
+    }
+  },
+  "los_nogales": {
+    "nombre": "Los Nogales",
+    "ubicacion": {
+      "departamento": "Cundinamarca",
+      "municipio": "Bogotá D.C.",
+      "localidades_principales": [
+        "Sin Información",
+        "Engativá",
+        "Chapinero",
+        "Usaquén"
+      ]
+    },
+    "demografia": {
+      "rango_salario": {
+        "mas_de_4_smlv": 67.0,
+        "menos_de_4_smlv": 33.0
+      },
+      "genero": {
+        "femenino": 55.0,
+        "masculino": 45.0
+      },
+      "rango_edad": {
+        "20_a_35": 15.0,
+        "36_a_45": 40.0,
+        "otros": 45.0
+      },
+      "segmento": {
+        "joven": 11.0,
+        "basico": 7.0,
+        "medio": 80.0,
+        "alto": 2.0,
+        "sin_grupo": 0.0
+      },
+      "segmento_familia": {
+        "monoparental": 20.0,
+        "nuclear_integrada": 24.0,
+        "ampliada": 0.0,
+        "pareja_conyugal": 22.0,
+        "monoparental_ampliada": 2.0,
+        "sin_grupo": 35.0
+      },
+      "afiliacion": {
+        "afiliado": 40.0,
+        "no_afilado": 60.0
+      },
+      "estrato": {
+        "cero": 35.0,
+        "uno": 0.0,
+        "dos": 0.0,
+        "tres": 36.0,
+        "cuatro": 4.0,
+        "cinco": 0.0,
+        "seis": 4.0,
+        "sin_informacion": 55.0
+      },
+      "pac": {
+        "cero": 35.0,
+        "uno": 33.0,
+        "dos": 16.0,
+        "tres": 15.0,
+        "cuatro": 0.0
+      }
+    },
+    "empresas": {
+      "segmento_empresas": {
+        "micro": 35.0,
+        "pequena": 0.0,
+        "mediana": 16.0,
+        "grande": 33.0,
+        "emp_top": 7.0,
+        "transaccional": 9.0,
+        "pensionados": 0.0,
+        "independientes": 0.0
+      },
+      "top_empresas": [
+        {
+          "nombre": "COLSUBSIDIO",
+          "porcentaje": 4
+        },
+        {
+          "nombre": "MERCADOLIBRE",
+          "porcentaje": 3
+        },
+        {
+          "nombre": "CIMMA CONSTRUCTORA SAS",
+          "porcentaje": 2
+        },
+        {
+          "nombre": "IMPUESTOS Y ADUANAS",
+          "porcentaje": 2
+        },
+        {
+          "nombre": "SIEMENS ENERGY",
+          "porcentaje": 1
+        },
+        {
+          "nombre": "NEC DE COLOMBIA S A",
+          "porcentaje": 1
+        },
+        {
+          "nombre": "MARISOL ROJAS ROMERO",
+          "porcentaje": 1
+        },
+        {
+          "nombre": "ADECCO",
+          "porcentaje": 1
+        },
+        {
+          "nombre": "PROCREACION MEDICAM",
+          "porcentaje": 1
+        },
+        {
+          "nombre": "CENTRAL DE DISOLVENTES",
+          "porcentaje": 1
+        },
+        {
+          "nombre": "BRIZGA CORPORATION SAS",
+          "porcentaje": 1
+        }
+      ]
+    },
+    "financiero": {
+      "entidades_financieras": {
+        "colsubsidio": 4.0,
+        "davivienda": 40.0,
+        "bancolombia": 18.0,
+        "otros": 38.0
+      }
+    },
+    "metadata": {
+      "fecha_corte": "2026-01-15",
+      "proyecto_tipo": "Vivienda de Interés Social (VIS)",
+      "rango_precio_aprox": "No especificado"
+    }
+  },
+  "karakali": {
+    "nombre": "Karakali",
+    "ubicacion": {
+      "departamento": "Cundinamarca",
+      "municipio": "Bogotá D.C.",
+      "localidades_principales": [
+        "Sin Información",
+        "Engativá",
+        "Kennedy",
+        "Teusaquillo"
+      ]
+    },
+    "demografia": {
+      "rango_salario": {
+        "hasta_2_smlv": 47.0,
+        "mas_de_2_smlv": 53.0
+      },
+      "genero": {
+        "femenino": 51.0,
+        "masculino": 49.0
+      },
+      "rango_edad": {
+        "20_a_35": 57.0,
+        "36_a_45": 21.0,
+        "otros": 22.0
+      },
+      "segmento": {
+        "joven": 37.0,
+        "basico": 28.0,
+        "medio": 35.0,
+        "alto": 0.0,
+        "sin_grupo": 0.0
+      },
+      "segmento_familia": {
+        "monoparental": 10.0,
+        "nuclear_integrada": 9.0,
+        "ampliada": 7.0,
+        "pareja_conyugal": 6.0,
+        "monoparental_ampliada": 0.0,
+        "sin_grupo": 68.0
+      },
+      "afiliacion": {
+        "afiliado": 59.0,
+        "no_afilado": 41.0
+      },
+      "estrato": {
+        "cero": 68.0,
+        "uno": 3.0,
+        "dos": 3.0,
+        "tres": 22.0,
+        "cuatro": 4.0
+      },
+      "pac": {
+        "cero": 68.0,
+        "uno": 16.0,
+        "dos": 9.0,
+        "tres": 7.0,
+        "cuatro": 0.0
+      }
+    },
+    "empresas": {
+      "segmento_empresas": {
+        "micro": 53.0,
+        "pequena": 0.0,
+        "mediana": 16.0,
+        "grande": 19.0,
+        "emp_top": 7.0,
+        "transaccional": 3.0,
+        "estandar": 2.0
+      },
+      "top_empresas": [
+        {
+          "nombre": "COLSUBSIDIO",
+          "porcentaje": 7
+        },
+        {
+          "nombre": "TELEPERFORMANCE",
+          "porcentaje": 3
+        },
+        {
+          "nombre": "PROYECTA SOLUCIONES ELITE",
+          "porcentaje": 2
+        },
+        {
+          "nombre": "PERFILES Y SOLUCIONES LOGI",
+          "porcentaje": 2
+        },
+        {
+          "nombre": "IMPUESTOS Y ADUANAS",
+          "porcentaje": 2
+        },
+        {
+          "nombre": "MEDIAWISE SOLUTIONS SAS",
+          "porcentaje": 1
+        },
+        {
+          "nombre": "AUTOGERMANA S A S",
+          "porcentaje": 1
+        },
+        {
+          "nombre": "ARIDE S.A.S",
+          "porcentaje": 1
+        },
+        {
+          "nombre": "A M ELECTRICISTAS",
+          "porcentaje": 1
+        },
+        {
+          "nombre": "JOSE JOAQUIN GOMEZ C Y CIA",
+          "porcentaje": 1
+        },
+        {
+          "nombre": "CAPGEMINI COLOMBIA S.A.S.",
+          "porcentaje": 1
+        }
+      ]
+    },
+    "financiero": {
+      "entidades_financieras": {
+        "colsubsidio": 28.0,
+        "davivienda": 31.0,
+        "bancolombia": 16.0,
+        "otros": 25.0
+      }
+    },
+    "metadata": {
+      "fecha_corte": "2026-01-15",
+      "proyecto_tipo": "Vivienda de Interés Social (VIS)",
+      "rango_precio_aprox": "No especificado"
+    }
+  },
+  "versalles": {
+    "nombre": "Versalles",
+    "ubicacion": {
+      "departamento": "Cundinamarca",
+      "municipio": "Bogotá D.C.",
+      "localidades_principales": [
+        "Sin Información",
+        "Engativá",
+        "Chapinero",
+        "R. Uribe"
+      ]
+    },
+    "demografia": {
+      "rango_salario": {
+        "hasta_2_smlv": 100.0,
+        "mas_de_2_smlv": 0.0
+      },
+      "genero": {
+        "femenino": 55.0,
+        "masculino": 45.0
+      },
+      "rango_edad": {
+        "20_a_35": 61.0,
+        "36_a_45": 29.0,
+        "otros": 10.0
+      },
+      "segmento": {
+        "joven": 20.0,
+        "basico": 38.0,
+        "medio": 42.0,
+        "alto": 0.0,
+        "sin_grupo": 0.0
+      },
+      "segmento_familia": {
+        "monoparental": 51.0,
+        "nuclear_integrada": 13.0,
+        "ampliada": 2.0,
+        "pareja_conyugal": 0.0,
+        "monoparental_ampliada": 0.0,
+        "sin_grupo": 34.0
+      },
+      "afiliacion": {
+        "afiliado": 71.0,
+        "no_afilado": 29.0
+      },
+      "estrato": {
+        "cero": 34.0,
+        "uno": 4.0,
+        "dos": 11.0,
+        "tres": 8.0,
+        "cuatro": 2.0,
+        "cinco": 2.0
+      },
+      "pac": {
+        "cero": 34.0,
+        "uno": 31.0,
+        "dos": 22.0,
+        "tres": 9.0,
+        "cuatro": 0.0
+      }
+    },
+    "empresas": {
+      "segmento_empresas": {
+        "micro": 29.0,
+        "pequena": 0.0,
+        "mediana": 29.0,
+        "grande": 20.0,
+        "emp_top": 13.0,
+        "transaccional": 7.0,
+        "estandar": 2.0
+      },
+      "top_empresas": [
+        {
+          "nombre": "JERONIMO MARTINS COLOMBI",
+          "porcentaje": 2
+        },
+        {
+          "nombre": "COLOMBIANA DE COMERCIO",
+          "porcentaje": 2
+        },
+        {
+          "nombre": "MEDICALL TALENTO HUMANO",
+          "porcentaje": 2
+        },
+        {
+          "nombre": "COLSUBSIDIO",
+          "porcentaje": 2
+        },
+        {
+          "nombre": "GMOVIL S A S",
+          "porcentaje": 2
+        },
+        {
+          "nombre": "SANIMAX DE COLOMBIA SAS",
+          "porcentaje": 1
+        },
+        {
+          "nombre": "MODANOVA S A S",
+          "porcentaje": 1
+        },
+        {
+          "nombre": "JUAN DAVID GRACIA CUBILLOS",
+          "porcentaje": 1
+        },
+        {
+          "nombre": "ALIANZA FIDUCIARIA S A",
+          "porcentaje": 1
+        },
+        {
+          "nombre": "PINABEN MOVIL CARGO SAS",
+          "porcentaje": 1
+        },
+        {
+          "nombre": "ALPINA",
+          "porcentaje": 1
+        }
+      ]
+    },
+    "financiero": {
+      "entidades_financieras": {
+        "colsubsidio": 28.0,
+        "davivienda": 25.0,
+        "hipoteca": 15.0,
+        "otros": 32.0
+      }
+    },
+    "metadata": {
+      "fecha_corte": "2026-01-15",
+      "proyecto_tipo": "Vivienda de Interés Social (VIS)",
+      "rango_precio_aprox": "No especificado"
+    }
+  },
+  "payande": {
+    "nombre": "Payandé",
+    "ubicacion": {
+      "departamento": "Cundinamarca",
+      "municipio": "Bogotá D.C.",
+      "localidades_principales": [
+        "Sin Información",
+        "Kennedy",
+        "Engativá",
+        "P. Aranda"
+      ]
+    },
+    "demografia": {
+      "rango_salario": {
+        "hasta_2_smlv": 65.0,
+        "mas_de_2_smlv": 35.0
+      },
+      "genero": {
+        "femenino": 52.0,
+        "masculino": 48.0
+      },
+      "rango_edad": {
+        "20_a_35": 37.0,
+        "36_a_45": 31.0,
+        "otros": 32.0
+      },
+      "segmento": {
+        "joven": 22.0,
+        "basico": 29.0,
+        "medio": 49.0,
+        "alto": 0.0,
+        "sin_grupo": 0.0
+      },
+      "segmento_familia": {
+        "monoparental": 31.0,
+        "nuclear_integrada": 9.0,
+        "ampliada": 3.0,
+        "pareja_conyugal": 0.0,
+        "monoparental_ampliada": 0.0,
+        "sin_grupo": 51.0
+      },
+      "afiliacion": {
+        "afiliado": 64.0,
+        "no_afilado": 36.0
+      },
+      "estrato": {
+        "cero": 51.0,
+        "uno": 4.0,
+        "dos": 11.0,
+        "tres": 11.0,
+        "cuatro": 4.0
+      },
+      "pac": {
+        "cero": 51.0,
+        "uno": 26.0,
+        "dos": 15.0,
+        "tres": 7.0,
+        "cuatro": 1.0
+      }
+    },
+    "empresas": {
+      "segmento_empresas": {
+        "micro": 47.0,
+        "pequena": 0.0,
+        "mediana": 14.0,
+        "grande": 23.0,
+        "emp_top": 8.0,
+        "transaccional": 3.0,
+        "estandar": 5.0
+      },
+      "top_empresas": [
+        {
+          "nombre": "COLSUBSIDIO",
+          "porcentaje": 18
+        },
+        {
+          "nombre": "MINUTO DE DIOS",
+          "porcentaje": 4
+        },
+        {
+          "nombre": "NTT DATA COLOMBIA S. A. S.",
+          "porcentaje": 3
+        },
+        {
+          "nombre": "INPEC",
+          "porcentaje": 3
+        },
+        {
+          "nombre": "CONSORCIO EXPRESS S A S",
+          "porcentaje": 3
+        },
+        {
+          "nombre": "DIRECCION SECC AMAZONAS",
+          "porcentaje": 3
+        },
+        {
+          "nombre": "BRINSA S A",
+          "porcentaje": 2
+        },
+        {
+          "nombre": "MULTIENLACE S A",
+          "porcentaje": 2
+        },
+        {
+          "nombre": "CLINICA COLSANITAS S.A.",
+          "porcentaje": 2
+        },
+        {
+          "nombre": "BANCO DE OCCIDENTE S A",
+          "porcentaje": 2
+        },
+        {
+          "nombre": "BISION CONSULTING S A S",
+          "porcentaje": 2
+        }
+      ]
+    },
+    "financiero": {
+      "entidades_financieras": {
+        "colsubsidio": 35.0,
+        "davivienda": 15.0,
+        "banco_de_bogota": 24.0,
+        "otros": 26.0
+      }
+    },
+    "metadata": {
+      "fecha_corte": "2026-01-15",
+      "proyecto_tipo": "Vivienda de Interés Social (VIS)",
+      "rango_precio_aprox": "No especificado"
+    }
+  },
+  "araucaria": {
+    "nombre": "Araucaria",
+    "ubicacion": {
+      "departamento": "Cundinamarca",
+      "municipio": "Bogotá D.C.",
+      "localidades_principales": [
+        "Sin Información",
+        "Engativá",
+        "Suba",
+        "Teusaquillo"
+      ]
+    },
+    "demografia": {
+      "rango_salario": {
+        "entre_4_y_6": 25.0,
+        "entre_3_y_4": 22.0,
+        "entre_6_y_8": 19.0,
+        "entre_20_y_30": 3.0,
+        "otros": 31.0
+      },
+      "genero": {
+        "femenino": 53.0,
+        "masculino": 47.0
+      },
+      "rango_edad": {
+        "20_a_35": 38.0,
+        "36_a_45": 25.0,
+        "otros": 37.0
+      },
+      "segmento": {
+        "joven": 38.0,
+        "basico": 3.0,
+        "medio": 56.0,
+        "alto": 3.0,
+        "sin_grupo": 0.0
+      },
+      "segmento_familia": {
+        "monoparental": 28.0,
+        "nuclear_integrada": 16.0,
+        "ampliada": 16.0,
+        "pareja_conyugal": 0.0,
+        "monoparental_ampliada": 0.0,
+        "sin_grupo": 47.0
+      },
+      "afiliacion": {
+        "afiliado": 38.0,
+        "no_afilado": 62.0
+      },
+      "estrato": {
+        "cero": 47.0,
+        "uno": 0.0,
+        "dos": 34.0,
+        "tres": 34.0,
+        "cuatro": 3.0,
+        "seis": 3.0
+      },
+      "pac": {
+        "cero": 47.0,
+        "uno": 25.0,
+        "dos": 22.0,
+        "tres": 6.0,
+        "cuatro": 0.0
+      }
+    },
+    "empresas": {
+      "segmento_empresas": {
+        "micro": 34.0,
+        "pequena": 0.0,
+        "mediana": 19.0,
+        "grande": 34.0,
+        "emp_top": 6.0,
+        "transaccional": 3.0,
+        "estandar": 4.0
+      },
+      "top_empresas": [
+        {
+          "nombre": "BBVA",
+          "porcentaje": 2
+        },
+        {
+          "nombre": "ITAU",
+          "porcentaje": 1
+        },
+        {
+          "nombre": "AEROVIAS DE INTEGRACION",
+          "porcentaje": 1
+        },
+        {
+          "nombre": "NOKIA",
+          "porcentaje": 1
+        },
+        {
+          "nombre": "AMADEUS IT GROUP",
+          "porcentaje": 1
+        },
+        {
+          "nombre": "A GOMEZ K CIA S EN C",
+          "porcentaje": 1
+        },
+        {
+          "nombre": "AMAZON WEB SERVICES",
+          "porcentaje": 1
+        },
+        {
+          "nombre": "METROLOGICAL CENTER SAS",
+          "porcentaje": 1
+        },
+        {
+          "nombre": "AMWAY COLOMBIA",
+          "porcentaje": 1
+        },
+        {
+          "nombre": "PCM COLOMBIA S A S",
+          "porcentaje": 1
+        },
+        {
+          "nombre": "SERITAMPO SAS",
+          "porcentaje": 1
+        }
+      ]
+    },
+    "financiero": {
+      "entidades_financieras": {
+        "colsubsidio": 59.0,
+        "bancolombia": 16.0,
+        "banco_de_bogota": 16.0,
+        "otros": 9.0
+      }
+    },
+    "metadata": {
+      "fecha_corte": "2026-01-15",
+      "proyecto_tipo": "Vivienda de Interés Social (VIS)",
+      "rango_precio_aprox": "No especificado"
+    }
+  },
+  "total": {
+    "nombre": "Total General",
+    "ubicacion": {
+      "departamento": "Cundinamarca",
+      "municipio": "Bogotá D.C. y Municipios",
+      "localidades_principales": [
+        "Sin Información",
+        "Engativá",
+        "Suba",
+        "Kennedy"
+      ]
+    },
+    "demografia": {
+      "rango_salario": {
+        "hasta_2_smlv": 78.0,
+        "2_a_4_smlv": 16.0,
+        "4_a_10_smlv": 5.0,
+        "mas_de_10_smlv": 1.0
+      },
+      "genero": {
+        "femenino": 51.0,
+        "masculino": 49.0
+      },
+      "rango_edad": {
+        "20_a_35": 51.0,
+        "36_a_45": 28.0,
+        "otros": 21.0
+      },
+      "segmento": {
+        "joven": 24.0,
+        "basico": 38.0,
+        "medio": 39.0,
+        "alto": 0.0,
+        "sin_grupo": 0.0
+      },
+      "segmento_familia": {
+        "monoparental": 39.0,
+        "nuclear_integrada": 10.0,
+        "ampliada": 4.0,
+        "pareja_conyugal": 0.0,
+        "monoparental_ampliada": 0.0,
+        "sin_grupo": 43.0
+      },
+      "afiliacion": {
+        "afiliado": 62.0,
+        "no_afilado": 38.0
+      },
+      "estrato": {
+        "cero": 43.0,
+        "uno": 4.0,
+        "dos": 14.0,
+        "tres": 13.0,
+        "cuatro": 2.0,
+        "cinco": 0.0,
+        "seis": 1.0
+      },
+      "pac": {
+        "cero": 43.0,
+        "uno": 29.0,
+        "dos": 18.0,
+        "tres": 8.0,
+        "cuatro": 2.0
+      }
+    },
+    "empresas": {
+      "segmento_empresas": {
+        "micro": 34.0,
+        "pequena": 0.0,
+        "mediana": 25.0,
+        "grande": 21.0,
+        "emp_top": 14.0,
+        "transaccional": 4.0,
+        "estandar": 2.0
+      },
+      "top_empresas": [
+        {
+          "nombre": "COLSUBSIDIO",
+          "porcentaje": 109
+        },
+        {
+          "nombre": "TELEPERFORMANCE",
+          "porcentaje": 44
+        },
+        {
+          "nombre": "CONSORCIO EXPRESS S A S",
+          "porcentaje": 41
+        },
+        {
+          "nombre": "SECURITAS COLOMBIA S A",
+          "porcentaje": 21
+        },
+        {
+          "nombre": "G DE CUNDINAMARCA",
+          "porcentaje": 18
+        },
+        {
+          "nombre": "TRANS INT DE BOGOTA SAS",
+          "porcentaje": 17
+        },
+        {
+          "nombre": "MEDICALL TALENTO HUMANO",
+          "porcentaje": 16
+        },
+        {
+          "nombre": "JERONIMO MARTINS COLOMBI",
+          "porcentaje": 16
+        },
+        {
+          "nombre": "G EMPRESARIAL EN LINEA SA",
+          "porcentaje": 12
+        },
+        {
+          "nombre": "IMP Y ADUANAS NACIONALES",
+          "porcentaje": 11
+        },
+        {
+          "nombre": "TOPTEX",
+          "porcentaje": 11
+        }
+      ]
+    },
+    "financiero": {
+      "entidades_financieras": {
+        "colsubsidio": 48.0,
+        "davivienda": 18.0,
+        "f_ nacional_ahorro": 8.0,
+        "bancolombia": 6.0,
+        "otros": 20.0
+      }
+    },
+    "metadata": {
+      "fecha_corte": "2026-01-15",
+      "proyecto_tipo": "Agregado de todos los proyectos",
+      "rango_precio_aprox": "No especificado"
+    }
+  },
+  "maipore": {
+    "nombre": "Maipore",
+    "ubicacion": {
+      "departamento": "Cundinamarca",
+      "municipio": "Bogotá D.C.",
+      "localidades_principales": [
+        "Sin Información",
+        "Kennedy",
+        "Engativá",
+        "Bosa"
+      ]
+    },
+    "demografia": {
+      "rango_salario": {
+        "hasta_2_smlv": 90.0,
+        "mas_de_2_smlv": 10.0
+      },
+      "genero": {
+        "femenino": 51.0,
+        "masculino": 49.0
+      },
+      "rango_edad": {
+        "20_a_35": 54.0,
+        "36_a_45": 27.0,
+        "otros": 19.0
+      },
+      "segmento": {
+        "joven": 23.0,
+        "basico": 41.0,
+        "medio": 36.0,
+        "alto": 0.0,
+        "sin_grupo": 0.0
+      },
+      "segmento_familia": {
+        "monoparental": 44.0,
+        "nuclear_integrada": 8.0,
+        "ampliada": 4.0,
+        "pareja_conyugal": 0.0,
+        "monoparental_ampliada": 0.0,
+        "sin_grupo": 42.0
+      },
+      "afiliacion": {
+        "afiliado": 62.0,
+        "no_afilado": 38.0
+      },
+      "estrato": {
+        "cero": 42.0,
+        "uno": 4.0,
+        "dos": 14.0,
+        "tres": 10.0,
+        "cuatro": 1.0
+      },
+      "pac": {
+        "cero": 42.0,
+        "uno": 29.0,
+        "dos": 19.0,
+        "tres": 8.0,
+        "cuatro": 2.0
+      }
+    },
+    "empresas": {
+      "segmento_empresas": {
+        "micro": 31.0,
+        "pequena": 0.0,
+        "mediana": 29.0,
+        "grande": 21.0,
+        "emp_top": 14.0,
+        "transaccional": 5.0,
+        "estandar": 0.0
+      },
+      "top_empresas": [
+        {
+          "nombre": "COLSUBSIDIO",
+          "porcentaje": 39
+        },
+        {
+          "nombre": "TELEPERFORMANCE",
+          "porcentaje": 26
+        },
+        {
+          "nombre": "CONSORCIO EXPRESS S A S",
+          "porcentaje": 17
+        },
+        {
+          "nombre": "TRANSPORTE INTEGRADO BOG",
+          "porcentaje": 16
+        },
+        {
+          "nombre": "SECURITAS COLOMBIA S A",
+          "porcentaje": 11
+        },
+        {
+          "nombre": "JERONIMO MARTINS COLOMBI",
+          "porcentaje": 9
+        },
+        {
+          "nombre": "COLOMBIANA DE COMERCIO",
+          "porcentaje": 8
+        },
+        {
+          "nombre": "PERMODA LTDA",
+          "porcentaje": 7
+        },
+        {
+          "nombre": "RECAUDO BOGOTA SAS",
+          "porcentaje": 7
+        },
+        {
+          "nombre": "ATENTO S A",
+          "porcentaje": 7
+        },
+        {
+          "nombre": "ALFAGRES S.A.",
+          "porcentaje": 7
+        }
+      ]
+    },
+    "financiero": {
+      "entidades_financieras": {
+        "colsubsidio": 47.0,
+        "davivienda": 23.0,
+        "colsubsidio_secundario": 10.0,
+        "colsubsidio_terciario": 6.0,
+        "otros": 14.0
+      }
+    },
+    "metadata": {
+      "fecha_corte": "2026-01-15",
+      "proyecto_tipo": "Vivienda de Interés Social (VIS)",
+      "rango_precio_aprox": "No especificado"
+    }
+  },
+  "bogota": {
+    "nombre": "Bogotá",
+    "ubicacion": {
+      "departamento": "Cundinamarca",
+      "municipio": "Bogotá D.C.",
+      "localidades_principales": [
+        "Sin Información",
+        "Engativá",
+        "San Cristóbal",
+        "Chapinero"
+      ]
+    },
+    "demografia": {
+      "rango_salario": {
+        "hasta_2_smlv": 69.0,
+        "mas_de_2_smlv": 31.0
+      },
+      "genero": {
+        "femenino": 52.0,
+        "masculino": 48.0
+      },
+      "rango_edad": {
+        "20_a_35": 48.0,
+        "36_a_45": 31.0,
+        "otros": 21.0
+      },
+      "segmento": {
+        "joven": 20.0,
+        "basico": 37.0,
+        "medio": 43.0,
+        "alto": 0.0,
+        "sin_grupo": 0.0
+      },
+      "segmento_familia": {
+        "monoparental": 42.0,
+        "nuclear_integrada": 10.0,
+        "ampliada": 4.0,
+        "pareja_conyugal": 0.0,
+        "monoparental_ampliada": 0.0,
+        "sin_grupo": 37.0
+      },
+      "afiliacion": {
+        "afiliado": 56.0,
+        "no_afilado": 44.0
+      },
+      "estrato": {
+        "cero": 37.0,
+        "uno": 5.0,
+        "dos": 14.0,
+        "tres": 13.0,
+        "cuatro": 3.0
+      },
+      "pac": {
+        "cero": 37.0,
+        "uno": 31.0,
+        "dos": 21.0,
+        "tres": 9.0,
+        "cuatro": 2.0
+      }
+    },
+    "empresas": {
+      "segmento_empresas": {
+        "micro": 28.0,
+        "pequena": 0.0,
+        "mediana": 23.0,
+        "grande": 26.0,
+        "emp_top": 12.0,
+        "transaccional": 5.0,
+        "estandar": 6.0
+      },
+      "top_empresas": [
+        {
+          "nombre": "COLSUBSIDIO",
+          "porcentaje": 23
+        },
+        {
+          "nombre": "CONSORCIO EXPRESS S A S",
+          "porcentaje": 15
+        },
+        {
+          "nombre": "TELEPERFORMANCE",
+          "porcentaje": 8
+        },
+        {
+          "nombre": "MEDICALL TALENTO HUMANO",
+          "porcentaje": 7
+        },
+        {
+          "nombre": "ADECCO SERVICIOS COLOMBI",
+          "porcentaje": 6
+        },
+        {
+          "nombre": "MERCADOLIBRE COLOMBIA",
+          "porcentaje": 4
+        },
+        {
+          "nombre": "IMPUESTOS Y ADUANAS",
+          "porcentaje": 4
+        },
+        {
+          "nombre": "PROMOAMBIENTAL DISTRITO",
+          "porcentaje": 3
+        },
+        {
+          "nombre": "MANUFACTURAS ELIOT S A S",
+          "porcentaje": 3
+        },
+        {
+          "nombre": "SECURITAS COLOMBIA S A",
+          "porcentaje": 3
+        },
+        {
+          "nombre": "JERONIMO MARTINS COLOMB",
+          "porcentaje": 3
+        }
+      ]
+    },
+    "financiero": {
+      "entidades_financieras": {
+        "colsubsidio": 38.0,
+        "davivienda": 24.0,
+        "f_nacional": 11.0,
+        "bancolombia": 10.0,
+        "otros": 17.0
+      }
+    },
+    "metadata": {
+      "fecha_corte": "2026-01-15",
+      "proyecto_tipo": "Vivienda de Interés Social (VIS)",
+      "rango_precio_aprox": "No especificado"
+    }
+  },
+  "bosques_arrayan": {
+    "nombre": "Bosques de Arrayán",
+    "ubicacion": {
+      "departamento": "Cundinamarca",
+      "municipio": "Bogotá D.C.",
+      "localidades_principales": [
+        "Sin Información",
+        "Engativá",
+        "Suba",
+        "Kennedy"
+      ]
+    },
+    "demografia": {
+      "rango_salario": {
+        "hasta_2_smlv": 85.0,
+        "mas_de_2_smlv": 15.0
+      },
+      "genero": {
+        "femenino": 53.0,
+        "masculino": 47.0
+      },
+      "rango_edad": {
+        "20_a_35": 55.0,
+        "36_a_45": 28.0,
+        "otros": 17.0
+      },
+      "segmento": {
+        "joven": 20.0,
+        "basico": 40.0,
+        "medio": 40.0,
+        "alto": 0.0,
+        "sin_grupo": 0.0
+      },
+      "segmento_familia": {
+        "monoparental": 42.0,
+        "nuclear_integrada": 45.0,
+        "ampliada": 8.0,
+        "pareja_conyugal": 3.0,
+        "sin_grupo": 2.0
+      },
+      "afiliacion": {
+        "afiliado": 68.0,
+        "no_afilado": 32.0
+      },
+      "estrato": {
+        "cero": 42.0,
+        "uno": 5.0,
+        "dos": 15.0,
+        "tres": 12.0,
+        "cuatro": 2.0
+      }
+    },
+    "empresas": {
+      "segmento_empresas": {
+        "micro": 33.0,
+        "mediana": 28.0,
+        "grande": 21.0,
+        "emp_top": 14.0,
+        "transaccional": 4.0
+      },
+      "top_empresas": [
+        {
+          "nombre": "COLSUBSIDIO",
+          "porcentaje": 25
+        },
+        {
+          "nombre": "TELEPERFORMANCE",
+          "porcentaje": 18
+        },
+        {
+          "nombre": "CONSORCIO EXPRESS",
+          "porcentaje": 10
+        }
+      ]
+    },
+    "financiero": {
+      "entidades_financieras": {
+        "colsubsidio": 45.0,
+        "davivienda": 25.0,
+        "fna": 15.0,
+        "otros": 15.0
+      }
+    },
+    "metadata": {
+      "fecha_corte": "2026-01-15",
+      "proyecto_tipo": "Vivienda de Interés Social (VIS)",
+      "rango_precio_aprox": "No especificado"
+    }
+  },
+  "bosques_turpial": {
+    "nombre": "Bosques de Turpial",
+    "ubicacion": {
+      "departamento": "Cundinamarca",
+      "municipio": "Bogotá D.C.",
+      "localidades_principales": [
+        "Sin Información",
+        "Engativá",
+        "Kennedy",
+        "Bosa"
+      ]
+    },
+    "demografia": {
+      "rango_salario": {
+        "hasta_2_smlv": 82.0,
+        "mas_de_2_smlv": 18.0
+      },
+      "genero": {
+        "femenino": 52.0,
+        "masculino": 48.0
+      },
+      "rango_edad": {
+        "20_a_35": 50.0,
+        "36_a_45": 30.0,
+        "otros": 20.0
+      },
+      "segmento": {
+        "joven": 21.0,
+        "basico": 38.0,
+        "medio": 41.0,
+        "alto": 0.0
+      },
+      "segmento_familia": {
+        "monoparental": 40.0,
+        "nuclear_integrada": 44.0,
+        "ampliada": 10.0,
+        "pareja_conyugal": 4.0
+      },
+      "afiliacion": {
+        "afiliado": 67.0,
+        "no_afilado": 33.0
+      },
+      "estrato": {
+        "cero": 38.0,
+        "uno": 6.0,
+        "dos": 16.0,
+        "tres": 14.0,
+        "cuatro": 3.0
+      }
+    },
+    "empresas": {
+      "segmento_empresas": {
+        "micro": 35.0,
+        "mediana": 26.0,
+        "grande": 22.0,
+        "emp_top": 13.0,
+        "transaccional": 4.0
+      },
+      "top_empresas": [
+        {
+          "nombre": "COLSUBSIDIO",
+          "porcentaje": 22
+        },
+        {
+          "nombre": "TELEPERFORMANCE",
+          "porcentaje": 15
+        },
+        {
+          "nombre": "SECURITAS",
+          "porcentaje": 8
+        }
+      ]
+    },
+    "financiero": {
+      "entidades_financieras": {
+        "colsubsidio": 43.0,
+        "davivienda": 27.0,
+        "bancolombia": 15.0,
+        "otros": 15.0
+      }
+    },
+    "metadata": {
+      "fecha_corte": "2026-01-15",
+      "proyecto_tipo": "Vivienda de Interés Social (VIS)",
+      "rango_precio_aprox": "No especificado"
+    }
+  },
+  "la_macarena": {
+    "nombre": "La Macarena",
+    "ubicacion": {
+      "departamento": "Cundinamarca",
+      "municipio": "Bogotá D.C.",
+      "localidades_principales": [
+        "Sin Información",
+        "Engativá",
+        "Suba",
+        "Kennedy"
+      ]
+    },
+    "demografia": {
+      "rango_salario": {
+        "hasta_2_smlv": 79.0,
+        "mas_de_2_smlv": 21.0
+      },
+      "genero": {
+        "femenino": 50.0,
+        "masculino": 50.0
+      },
+      "rango_edad": {
+        "20_a_35": 52.0,
+        "36_a_45": 29.0,
+        "otros": 19.0
+      },
+      "segmento": {
+        "joven": 23.0,
+        "basico": 37.0,
+        "medio": 40.0,
+        "alto": 0.0
+      },
+      "segmento_familia": {
+        "monoparental": 38.0,
+        "nuclear_integrada": 46.0,
+        "ampliada": 9.0,
+        "pareja_conyugal": 5.0
+      },
+      "afiliacion": {
+        "afiliado": 63.0,
+        "no_afilado": 37.0
+      },
+      "estrato": {
+        "cero": 40.0,
+        "uno": 4.0,
+        "dos": 13.0,
+        "tres": 15.0,
+        "cuatro": 2.0
+      }
+    },
+    "empresas": {
+      "segmento_empresas": {
+        "micro": 32.0,
+        "mediana": 27.0,
+        "grande": 23.0,
+        "emp_top": 15.0,
+        "transaccional": 3.0
+      },
+      "top_empresas": [
+        {
+          "nombre": "COLSUBSIDIO",
+          "porcentaje": 20
+        },
+        {
+          "nombre": "CONSORCIO EXPRESS",
+          "porcentaje": 12
+        },
+        {
+          "nombre": "TELEPERFORMANCE",
+          "porcentaje": 10
+        }
+      ]
+    },
+    "financiero": {
+      "entidades_financieras": {
+        "colsubsidio": 46.0,
+        "davivienda": 22.0,
+        "bbva": 18.0,
+        "otros": 14.0
+      }
+    },
+    "metadata": {
+      "fecha_corte": "2026-01-15",
+      "proyecto_tipo": "Vivienda de Interés Social (VIS)",
+      "rango_precio_aprox": "No especificado"
+    }
+  },
+  "la_arboleda": {
+    "nombre": "La Arboleda",
+    "ubicacion": {
+      "departamento": "Cundinamarca",
+      "municipio": "Bogotá D.C.",
+      "localidades_principales": [
+        "Sin Información",
+        "Engativá",
+        "Suba",
+        "Kennedy"
+      ]
+    },
+    "demografia": {
+      "rango_salario": {
+        "hasta_2_smlv": 75.0,
+        "mas_de_2_smlv": 25.0
+      },
+      "genero": {
+        "femenino": 51.0,
+        "masculino": 49.0
+      },
+      "rango_edad": {
+        "20_a_35": 49.0,
+        "36_a_45": 30.0,
+        "otros": 21.0
+      },
+      "segmento": {
+        "joven": 22.0,
+        "basico": 36.0,
+        "medio": 42.0,
+        "alto": 0.0
+      },
+      "segmento_familia": {
+        "monoparental": 41.0,
+        "nuclear_integrada": 43.0,
+        "ampliada": 10.0,
+        "pareja_conyugal": 4.0
+      },
+      "afiliacion": {
+        "afiliado": 60.0,
+        "no_afilado": 40.0
+      },
+      "estrato": {
+        "cero": 39.0,
+        "uno": 5.0,
+        "dos": 15.0,
+        "tres": 14.0,
+        "cuatro": 3.0
+      }
+    },
+    "empresas": {
+      "segmento_empresas": {
+        "micro": 34.0,
+        "mediana": 24.0,
+        "grande": 24.0,
+        "emp_top": 13.0,
+        "transaccional": 5.0
+      },
+      "top_empresas": [
+        {
+          "nombre": "COLSUBSIDIO",
+          "porcentaje": 18
+        },
+        {
+          "nombre": "TELEPERFORMANCE",
+          "porcentaje": 12
+        },
+        {
+          "nombre": "CONSORCIO EXPRESS",
+          "porcentaje": 9
+        }
+      ]
+    },
+    "financiero": {
+      "entidades_financieras": {
+        "colsubsidio": 44.0,
+        "davivienda": 24.0,
+        "bancolombia": 17.0,
+        "otros": 15.0
+      }
+    },
+    "metadata": {
+      "fecha_corte": "2026-01-15",
+      "proyecto_tipo": "Vivienda de Interés Social (VIS)",
+      "rango_precio_aprox": "No especificado"
+    }
+  },
+  "abeto": {
+    "nombre": "Abeto",
+    "ubicacion": {
+      "departamento": "Cundinamarca",
+      "municipio": "Bogotá D.C.",
+      "localidades_principales": [
+        "Sin Información",
+        "Engativá"
+      ]
+    },
+    "demografia": {
+      "rango_salario": {
+        "hasta_2_smlv": 0.0,
+        "mas_de_2_smlv": 50.0,
+        "sin_informacion": 50.0
+      },
+      "genero": {
+        "femenino": 50.0,
+        "masculino": 50.0
+      },
+      "rango_edad": {
+        "20_a_35": 50.0,
+        "36_a_45": 0.0,
+        "otros": 50.0
+      },
+      "segmento": {
+        "joven": 50.0,
+        "basico": 0.0,
+        "medio": 50.0,
+        "alto": 0.0,
+        "sin_grupo": 0.0
+      },
+      "segmento_familia": {
+        "monoparental": 0.0,
+        "nuclear_integrada": 0.0,
+        "ampliada": 0.0,
+        "pareja_conyugal": 0.0,
+        "sin_grupo": 100.0
+      },
+      "afiliacion": {
+        "afiliado": 40.0,
+        "no_afilado": 60.0
+      },
+      "estrato": {
+        "cero": 100.0,
+        "uno": 0.0,
+        "dos": 0.0,
+        "tres": 50.0,
+        "cuatro": 0.0
+      },
+      "pac": {
+        "cero": 100.0,
+        "uno": 0.0,
+        "dos": 0.0,
+        "tres": 0.0,
+        "cuatro": 0.0
+      }
+    },
+    "empresas": {
+      "segmento_empresas": {
+        "micro": 50.0,
+        "mediana": 0.0,
+        "grande": 50.0,
+        "emp_top": 0.0,
+        "transaccional": 0.0
+      },
+      "top_empresas": [
+        {
+          "nombre": "TELEPERFORMANCE",
+          "porcentaje": 1
+        },
+        {
+          "nombre": "GESCO SAS",
+          "porcentaje": 1
+        }
+      ]
+    },
+    "financiero": {
+      "entidades_financieras": {
+        "colsubsidio": 100.0
+      }
+    },
+    "metadata": {
+      "fecha_corte": "2026-01-15",
+      "proyecto_tipo": "Vivienda de Interés Social (VIS)",
+      "rango_precio_aprox": "No especificado"
+    }
+  },
+  "vibonce": {
+    "nombre": "Vibonce",
+    "ubicacion": {
+      "departamento": "Cundinamarca",
+      "municipio": "Bogotá D.C.",
+      "localidades_principales": [
+        "Engativá"
+      ]
+    },
+    "demografia": {
+      "rango_salario": {
+        "hasta_2_smlv": 100.0,
+        "mas_de_2_smlv": 0.0
+      },
+      "genero": {
+        "femenino": 50.0,
+        "masculino": 50.0
+      },
+      "rango_edad": {
+        "20_a_35": 50.0,
+        "36_a_45": 0.0,
+        "otros": 50.0
+      },
+      "segmento": {
+        "joven": 50.0,
+        "basico": 50.0,
+        "medio": 0.0,
+        "alto": 0.0
+      },
+      "segmento_familia": {
+        "monoparental": 50.0,
+        "nuclear_integrada": 0.0,
+        "ampliada": 0.0,
+        "sin_grupo": 50.0
+      },
+      "afiliacion": {
+        "afiliado": 64.0,
+        "no_afilado": 36.0
+      },
+      "estrato": {
+        "cero": 50.0,
+        "uno": 0.0,
+        "dos": 0.0,
+        "tres": 0.0
+      },
+      "pac": {
+        "cero": 50.0,
+        "uno": 0.0,
+        "dos": 50.0
+      }
+    },
+    "empresas": {
+      "segmento_empresas": {
+        "micro": 100.0
+      },
+      "top_empresas": [
+        {
+          "nombre": "SERENIA SAS",
+          "porcentaje": 1
+        },
+        {
+          "nombre": "HF MOTORCYCLES SAS",
+          "porcentaje": 1
+        }
+      ]
+    },
+    "financiero": {
+      "entidades_financieras": {
+        "davivienda": 100.0
+      }
+    },
+    "metadata": {
+      "fecha_corte": "2026-01-15",
+      "proyecto_tipo": "Vivienda de Interés Social (VIS)",
+      "rango_precio_aprox": "No especificado"
+    }
+  },
+  "verde_esperanza": {
+    "nombre": "Verde Esperanza",
+    "ubicacion": {
+      "departamento": "Cundinamarca",
+      "municipio": "Bogotá D.C.",
+      "localidades_principales": [
+        "Sin Información",
+        "Engativá",
+        "Suba",
+        "Kennedy"
+      ]
+    },
+    "demografia": {
+      "rango_salario": {
+        "hasta_2_smlv": 80.0,
+        "mas_de_2_smlv": 20.0
+      },
+      "genero": {
+        "femenino": 52.0,
+        "masculino": 48.0
+      },
+      "rango_edad": {
+        "20_a_35": 53.0,
+        "36_a_45": 28.0,
+        "otros": 19.0
+      },
+      "segmento": {
+        "joven": 22.0,
+        "basico": 39.0,
+        "medio": 39.0,
+        "alto": 0.0
+      },
+      "segmento_familia": {
+        "monoparental": 40.0,
+        "nuclear_integrada": 44.0,
+        "ampliada": 9.0,
+        "pareja_conyugal": 5.0
+      },
+      "afiliacion": {
+        "afiliado": 65.0,
+        "no_afilado": 35.0
+      },
+      "estrato": {
+        "cero": 41.0,
+        "uno": 4.0,
+        "dos": 14.0,
+        "tres": 14.0,
+        "cuatro": 2.0
+      }
+    },
+    "empresas": {
+      "segmento_empresas": {
+        "micro": 33.0,
+        "mediana": 26.0,
+        "grande": 22.0,
+        "emp_top": 15.0,
+        "transaccional": 4.0
+      }
+    },
+    "financiero": {
+      "entidades_financieras": {
+        "colsubsidio": 47.0,
+        "davivienda": 22.0,
+        "bbva": 17.0,
+        "otros": 14.0
+      }
+    },
+    "metadata": {
+      "fecha_corte": "2026-01-15",
+      "proyecto_tipo": "Vivienda de Interés Social (VIS)",
+      "rango_precio_aprox": "No especificado"
+    }
+  },
+  "municipios_norte": {
+    "nombre": "Municipios Norte",
+    "ubicacion": {
+      "departamento": "Cundinamarca",
+      "municipios": [
+        "Zipaquirá",
+        "Chía",
+        "Cajicá",
+        "Tabio",
+        "Tenjo",
+        "Sopó",
+        "Tocancipá",
+        "Gachancipá"
+      ]
+    },
+    "demografia": {
+      "rango_salario": {
+        "hasta_2_smlv": 70.0,
+        "mas_de_2_smlv": 30.0
+      },
+      "genero": {
+        "femenino": 51.0,
+        "masculino": 49.0
+      },
+      "rango_edad": {
+        "20_a_35": 48.0,
+        "36_a_45": 30.0,
+        "otros": 22.0
+      },
+      "afiliacion": {
+        "afiliado": 58.0,
+        "no_afilado": 42.0
+      },
+      "estrato": {
+        "cero": 35.0,
+        "uno": 5.0,
+        "dos": 15.0,
+        "tres": 20.0,
+        "cuatro": 5.0
+      }
+    },
+    "empresas": {
+      "segmento_empresas": {
+        "micro": 30.0,
+        "mediana": 25.0,
+        "grande": 25.0,
+        "emp_top": 15.0
+      }
+    },
+    "financiero": {
+      "entidades_financieras": {
+        "colsubsidio": 40.0,
+        "davivienda": 25.0,
+        "bbva": 20.0,
+        "otros": 15.0
+      }
+    },
+    "metadata": {
+      "fecha_corte": "2026-01-15",
+      "proyecto_tipo": "Vivienda de Interés Social (VIS)",
+      "rango_precio_aprox": "No especificado"
+    }
+  },
+  "municipios_sur": {
+    "nombre": "Municipios Sur",
+    "ubicacion": {
+      "departamento": "Cundinamarca",
+      "municipios": [
+        "Soacha",
+        "Sibaté",
+        "Fusagasugá",
+        "Silvania",
+        "Granada",
+        "San Antonio del Tequendama"
+      ]
+    },
+    "demografia": {
+      "rango_salario": {
+        "hasta_2_smlv": 85.0,
+        "mas_de_2_smlv": 15.0
+      },
+      "genero": {
+        "femenino": 52.0,
+        "masculino": 48.0
+      },
+      "rango_edad": {
+        "20_a_35": 55.0,
+        "36_a_45": 27.0,
+        "otros": 18.0
+      },
+      "afiliacion": {
+        "afiliado": 65.0,
+        "no_afilado": 35.0
+      },
+      "estrato": {
+        "cero": 45.0,
+        "uno": 8.0,
+        "dos": 18.0,
+        "tres": 10.0,
+        "cuatro": 2.0
+      }
+    },
+    "empresas": {
+      "segmento_empresas": {
+        "micro": 40.0,
+        "mediana": 25.0,
+        "grande": 20.0,
+        "emp_top": 10.0
+      }
+    },
+    "financiero": {
+      "entidades_financieras": {
+        "colsubsidio": 45.0,
+        "davivienda": 20.0,
+        "fna": 15.0,
+        "otros": 20.0
+      }
+    },
+    "metadata": {
+      "fecha_corte": "2026-01-15",
+      "proyecto_tipo": "Vivienda de Interés Social (VIS)",
+      "rango_precio_aprox": "No especificado"
+    }
+  }
+}

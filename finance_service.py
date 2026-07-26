@@ -26,9 +26,9 @@ def calculate_financial_profile(
     range_name = income_range_for(income)
 
     subsidy = 0
-    if affiliated and income <= 2 * SMMLV_2026:
+    if affiliated and 0 < income <= 2 * SMMLV_2026:
         subsidy = SUBSIDY_30
-    elif affiliated and income <= 4 * SMMLV_2026:
+    elif affiliated and 0 < income <= 4 * SMMLV_2026:
         subsidy = SUBSIDY_20
 
     concurrent = (
