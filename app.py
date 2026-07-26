@@ -370,6 +370,76 @@ st.markdown(
         text-align:center;font-weight:800;color:var(--graphite);
         box-shadow:0 5px 16px rgba(0,0,0,.04);
     }
+    .cat-hero {
+        background:linear-gradient(135deg,#f0f6fe 0%,#e1edf9 100%);
+        border-radius:24px;padding:var(--space-3) var(--space-4);
+        margin:var(--space-2) 0 var(--space-3);
+        border:1px solid #d0ddea;
+        display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;
+    }
+    .cat-hero h2 { margin:0;font-size:28px !important;color:#00375f; }
+    .cat-hero p { margin:4px 0 0;font-size:14px;opacity:.75; }
+    .cat-grid {
+        display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+        gap:var(--space-2);margin:var(--space-2) 0 var(--space-3);
+    }
+    .cat-stat {
+        background:var(--white);border:1px solid #e2e7eb;
+        border-radius:18px;padding:var(--space-2) var(--space-3);
+        box-shadow:var(--shadow-soft);text-align:center;
+        transition:transform .2s,box-shadow .2s;
+    }
+    .cat-stat:hover { transform:translateY(-2px);box-shadow:0 14px 35px rgba(0,72,126,.14); }
+    .cat-stat-value {
+        display:block;font-size:28px;font-weight:900;color:#000;
+        line-height:1.1;letter-spacing:-.03em;
+    }
+    .cat-stat-label {
+        display:block;font-size:12px;font-weight:700;color:var(--graphite);
+        text-transform:uppercase;letter-spacing:.04em;margin-top:4px;
+    }
+    .cat-stat-note {
+        display:block;font-size:11px;color:var(--graphite);opacity:.6;
+        margin-top:2px;
+    }
+    .cat-detail-card {
+        background:var(--white);border:1px solid #dfe6eb;
+        border-radius:20px;overflow:hidden;
+        box-shadow:var(--shadow-soft);margin:var(--space-2) 0 var(--space-3);
+    }
+    .cat-detail-header {
+        padding:var(--space-2) var(--space-3);
+        background:#f8fbfd;border-bottom:1px solid #dfe6eb;
+        font-weight:800;font-size:15px;color:var(--graphite);
+        display:flex;align-items:center;gap:10px;
+    }
+    .cat-detail-body {
+        padding:var(--space-2) var(--space-3) var(--space-3);
+        display:grid;grid-template-columns:1fr 1fr;gap:var(--space-2);
+    }
+    .cat-detail-item {
+        display:flex;flex-direction:column;gap:2px;
+        padding:var(--space-1) 0;
+    }
+    .cat-detail-item.full { grid-column:1 / -1; }
+    .cat-detail-key {
+        font-size:11px;font-weight:700;color:var(--col-blue);
+        text-transform:uppercase;letter-spacing:.04em;
+    }
+    .cat-detail-val {
+        font-size:16px;font-weight:600;color:var(--graphite);
+        line-height:1.4;
+    }
+    .cat-detail-val small { font-weight:400;font-size:13px;opacity:.65; }
+    .cat-table-wrap {
+        border:1px solid #dfe6eb;border-radius:18px;overflow:hidden;
+        box-shadow:0 8px 24px rgba(0,72,126,.08);
+    }
+    @media (max-width:768px) {
+        .cat-detail-body { grid-template-columns:1fr; }
+        .cat-hero { flex-direction:column;align-items:flex-start;gap:8px; }
+        .cat-grid { grid-template-columns:repeat(2,1fr); }
+    }
     .stage.active {
         background:#000;border-color:#000;color:#fff;
         box-shadow:inset 0 -6px 0 var(--col-yellow);
@@ -1333,11 +1403,19 @@ if section == "Experiencia del cliente":
 
 elif section == "Catálogo de proyectos":
     catalog = get_catalog()
-    st.subheader("Portafolio identificado en la base anonimizada")
-    st.caption(
-        f"{len(catalog)} proyectos encontrados en 4.142 registros. "
-        "Los indicadores de esta vista describen compradores históricos; no sustituyen "
-        "los precios ni la disponibilidad comercial vigente."
+    st.markdown(
+        f"""
+        <div class="cat-hero">
+          <div>
+            <h2>🏗️ Portafolio de proyectos</h2>
+            <p>{len(catalog)} proyectos analizados desde 4.142 registros históricos anonimizados</p>
+          </div>
+          <div style="text-align:right;font-size:13px;color:var(--graphite);opacity:.7;">
+            Datos inferidos · No sustituyen precio ni disponibilidad vigente
+          </div>
+        </div>
+        """,
+        unsafe_allow_html=True,
     )
     if not catalog:
         st.warning("No se encontró el archivo tableConvert.com_x950qq.json.")
@@ -1345,70 +1423,109 @@ elif section == "Catálogo de proyectos":
         selected_name = st.selectbox(
             "Selecciona un proyecto",
             [project["name"] for project in catalog],
+            label_visibility="collapsed",
         )
         project = next(item for item in catalog if item["name"] == selected_name)
 
-        metrics = st.columns(5)
-        metrics[0].metric("Registros", f"{project['records']:,}".replace(",", "."))
-        metrics[1].metric("Etapas", len(project["stages"]))
-        metrics[2].metric(
-            "Valor mediano estimado",
-            (
-                f"${project['estimated_price_median']:,.0f}".replace(",", ".")
-                if project["estimated_price_median"]
-                else "Sin dato"
-            ),
+        price_median = (
+            f"<strong>${project['estimated_price_median']:,.0f}</strong>".replace(",", ".")
+            if project["estimated_price_median"]
+            else "<strong>—</strong>"
         )
-        metrics[3].metric("Desistimientos", project["desistments"])
-        metrics[4].metric("Tasa desistimiento", f"{project['desistment_rate']:.1f}%")
+        desist_rate_color = "#16803a" if project["desistment_rate"] < 15 else ("#b45309" if project["desistment_rate"] < 30 else "#b91c1c")
+        stages_str = ", ".join(project["stages"]) or "—"
 
-        st.info(
-            "El valor monetario es una inferencia analítica: el campo exportado contiene "
-            "cuatro ceros adicionales y fue dividido por 10.000. Debe confirmarse contra "
-            "el brochure vigente antes de mostrarse como precio comercial."
+        st.markdown(
+            f"""
+            <div class="cat-grid">
+              <div class="cat-stat">
+                <span class="cat-stat-value">{project['records']:,}</span>
+                <span class="cat-stat-label">Registros</span>
+                <span class="cat-stat-note">en la base anonimizada</span>
+              </div>
+              <div class="cat-stat">
+                <span class="cat-stat-value">{len(project['stages'])}</span>
+                <span class="cat-stat-label">Etapas</span>
+                <span class="cat-stat-note">{stages_str}</span>
+              </div>
+              <div class="cat-stat">
+                <span class="cat-stat-value">{price_median}</span>
+                <span class="cat-stat-label">Valor mediano</span>
+                <span class="cat-stat-note">estimado · inferencia analítica</span>
+              </div>
+              <div class="cat-stat">
+                <span class="cat-stat-value">{project['desistments']}</span>
+                <span class="cat-stat-label">Desistimientos</span>
+                <span class="cat-stat-note">históricos registrados</span>
+              </div>
+              <div class="cat-stat">
+                <span class="cat-stat-value" style="color:{desist_rate_color}">{project['desistment_rate']:.1f}%</span>
+                <span class="cat-stat-label">Tasa desistimiento</span>
+                <span class="cat-stat-note">sobre el total de registros</span>
+              </div>
+            </div>
+            """,
+            unsafe_allow_html=True,
         )
 
-        left, right = st.columns(2, gap="large")
-        with left:
-            st.markdown("#### Cobertura del dataset")
-            st.write(f"**Etapas:** {', '.join(project['stages']) or 'Sin dato'}")
-            st.write(
-                f"**Opciones registradas:** {project['first_option'] or 'Sin dato'} "
-                f"a {project['last_option'] or 'Sin dato'}"
-            )
-            st.write(
-                "**Rango estimado de valores:** "
-                + (
-                    (
-                        f"${project['estimated_price_min']:,.0f} – "
-                        f"${project['estimated_price_max']:,.0f}"
-                    ).replace(",", ".")
-                    if project["estimated_price_min"]
-                    else "Sin dato"
-                )
-            )
-        with right:
-            st.markdown("#### Perfil agregado")
-            st.write(
-                "**Edades predominantes:** "
-                + ", ".join(
-                    f"{item['label']} ({item['count']})" for item in project["age_ranges"]
-                )
-            )
-            st.write(
-                "**Canales principales:** "
-                + ", ".join(
-                    f"{item['label']} ({item['count']})" for item in project["channels"]
-                )
-            )
-            st.write(
-                "**Entidades financieras:** "
-                + ", ".join(
-                    f"{item['label']} ({item['count']})"
-                    for item in project["financial_entities"]
-                )
-            )
+        st.markdown(
+            f"""
+            <div class="cat-detail-card">
+              <div class="cat-detail-header">📋 {html.escape(selected_name)} · Cobertura del dataset</div>
+              <div class="cat-detail-body">
+                <div class="cat-detail-item">
+                  <span class="cat-detail-key">Etapas del proyecto</span>
+                  <span class="cat-detail-val">{html.escape(stages_str)}</span>
+                </div>
+                <div class="cat-detail-item">
+                  <span class="cat-detail-key">Opciones registradas</span>
+                  <span class="cat-detail-val">
+                    {html.escape(project['first_option'] or '—')}
+                    <small>→</small>
+                    {html.escape(project['last_option'] or '—')}
+                  </span>
+                </div>
+                <div class="cat-detail-item">
+                  <span class="cat-detail-key">Rango estimado de valores</span>
+                  <span class="cat-detail-val">
+                    {
+                        (f"<strong>${project['estimated_price_min']:,.0f}</strong> – <strong>${project['estimated_price_max']:,.0f}</strong>").replace(",", ".")
+                        if project['estimated_price_min']
+                        else "<strong>—</strong>"
+                    }
+                    <small>precios inferidos · confirmar con brochure</small>
+                  </span>
+                </div>
+                <div class="cat-detail-item">
+                  <span class="cat-detail-key">Valor mediano</span>
+                  <span class="cat-detail-val">
+                    {price_median}
+                    <small>inferencia analítica · dividido por 10.000</small>
+                  </span>
+                </div>
+                <div class="cat-detail-item full">
+                  <span class="cat-detail-key">Perfil del comprador histórico</span>
+                  <span class="cat-detail-val">
+                    Edades: {", ".join(f"{item['label']} ({item['count']})" for item in project["age_ranges"])}  ·  
+                    Canales: {", ".join(f"{item['label']} ({item['count']})" for item in project["channels"])}  ·  
+                    Entidades: {", ".join(f"{item['label']} ({item['count']})" for item in project["financial_entities"])}
+                  </span>
+                </div>
+              </div>
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
 
+        st.markdown(
+            """
+            <div style="display:flex;align-items:center;gap:10px;margin:var(--space-2) 0 var(--space-1);">
+              <h3 style="margin:0;font-size:20px !important;">Inventario completo</h3>
+              <span style="font-size:12px;color:var(--graphite);opacity:.6;">portafolio completo de proyectos</span>
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
         table = pd.DataFrame(
             [
                 {
@@ -1423,7 +1540,7 @@ elif section == "Catálogo de proyectos":
             ]
         )
         table = table.fillna("—").replace({"": "—", "None": "—"})
-        st.subheader("Inventario completo")
+        st.markdown("<div class='cat-table-wrap'>", unsafe_allow_html=True)
         st.dataframe(
             table,
             width="stretch",
@@ -1435,6 +1552,7 @@ elif section == "Catálogo de proyectos":
                 ),
             },
         )
+        st.markdown("</div>", unsafe_allow_html=True)
 
 elif section == "Centro de operaciones":
     metrics = get_dashboard_metrics()
