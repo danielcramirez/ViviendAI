@@ -10,6 +10,7 @@ from pathlib import Path
 
 import pandas as pd
 import streamlit as st
+import streamlit.components.v1 as components
 import lead_service as _lead_service
 
 # Streamlit puede conservar módulos locales entre reruns. Se recarga para evitar
@@ -811,6 +812,61 @@ def _count_new_profile_fields(old: dict, new: dict) -> int:
         if old_val in (None, "", [], {}) and new_val not in (None, "", [], {}):
             count += 1
     return count
+
+
+def render_mermaid(diagram: str, height: int = 680) -> None:
+    """Render a Mermaid diagram inside an isolated Streamlit component."""
+    components.html(
+        f"""
+        <div class="mermaid-shell">
+          <pre class="mermaid">{html.escape(diagram)}</pre>
+        </div>
+        <style>
+          html, body {{
+            margin: 0;
+            padding: 0;
+            background: transparent;
+            font-family: Arial, sans-serif;
+          }}
+          .mermaid-shell {{
+            box-sizing: border-box;
+            width: 100%;
+            min-height: {height - 24}px;
+            padding: 16px;
+            overflow: auto;
+            border: 1px solid #dfe6eb;
+            border-radius: 16px;
+            background: #ffffff;
+          }}
+          .mermaid {{
+            display: flex;
+            justify-content: center;
+            margin: 0;
+          }}
+        </style>
+        <script type="module">
+          import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
+          mermaid.initialize({{
+            startOnLoad: false,
+            securityLevel: "loose",
+            theme: "base",
+            themeVariables: {{
+              primaryColor: "#fff7cc",
+              primaryTextColor: "#575756",
+              primaryBorderColor: "#0067b1",
+              lineColor: "#0067b1",
+              secondaryColor: "#e8f3fb",
+              tertiaryColor: "#ffffff",
+              fontFamily: "Arial, sans-serif"
+            }},
+            flowchart: {{ htmlLabels: true, curve: "basis" }}
+          }});
+          await mermaid.run({{ querySelector: ".mermaid" }});
+        </script>
+        """,
+        height=height,
+        scrolling=True,
+    )
 
 
 with st.sidebar:
@@ -1890,6 +1946,7 @@ elif section == "Centro de operaciones":
         with st.expander("Ver eventos técnicos de integración"):
             st.dataframe(events_df, width="stretch", hide_index=True)
 
+else:
     st.markdown(
         """
         <div class="arch-hero">
@@ -1902,116 +1959,108 @@ elif section == "Centro de operaciones":
     )
 
     with st.expander("📐 Diagrama de arquitectura", expanded=True):
-        st.markdown(
+        render_mermaid(
             """
-            <div class="mermaid-wrap">
-            ```mermaid
-            flowchart TB
-                subgraph Captura["1 · CAPTURA"]
-                    META["Meta Ads / Instagram<br/><small>Anuncio personalizado</small>"] --> FORM["Formulario instantáneo<br/><small>Streamlit</small>"]
-                    FORM --> LEAD["lead_service.py<br/><small>capture_lead()</small>"]
-                end
+flowchart TB
+    subgraph Captura["1 · CAPTURA"]
+        META["Meta Ads / Instagram<br/><small>Anuncio personalizado</small>"] --> FORM["Formulario instantáneo<br/><small>Streamlit</small>"]
+        FORM --> LEAD["lead_service.py<br/><small>capture_lead()</small>"]
+    end
 
-                subgraph Persistencia["2 · PERSISTENCIA"]
-                    LEAD --> SQLITE["SQLite<br/><small>leads.db · respaldo local</small>"]
-                    SQLITE --> SUPABASE["Supabase PostgreSQL<br/><small>vivi_leads · vivi_integration_events</small>"]
-                end
+    subgraph Persistencia["2 · PERSISTENCIA"]
+        LEAD --> SQLITE["SQLite<br/><small>leads.db · respaldo local</small>"]
+        SQLITE --> SUPABASE["Supabase PostgreSQL<br/><small>vivi_leads · vivi_integration_events</small>"]
+    end
 
-                subgraph Agentes["3 · AGENTES IA"]
-                    direction TB
-                    A1["Agente 1 · Consultor Empático<br/><small>vivi_agent_service.py</small>"] --> |"Extrae perfil"| A2["Agente 2 · Analista de Perfilamiento<br/><small>analista_perfilamiento.py</small>"]
-                    A2 --> SCORING["profiling_service.py<br/><small>calculate_propensity()</small>"]
-                    SCORING --> FICHA["Ficha del Sueño<br/><small>build_diagnosis()</small>"]
-                end
+    subgraph Agentes["3 · AGENTES IA"]
+        direction TB
+        A1["Agente 1 · Consultor Empático<br/><small>vivi_agent_service.py</small>"] -->|"Extrae perfil"| A2["Agente 2 · Analista de Perfilamiento<br/><small>analista_perfilamiento.py</small>"]
+        A2 --> SCORING["profiling_service.py<br/><small>calculate_propensity()</small>"]
+        SCORING --> FICHA["Ficha del Sueño<br/><small>build_diagnosis()</small>"]
+    end
 
-                subgraph Canales["4 · CANALES"]
-                    WEB["Streamlit UI<br/><small>Instagram simulado</small>"]
-                    TG["Telegram Bot<br/><small>Make + Gemini</small>"]
-                    API["REST API<br/><small>agent_api.py · /v1/chat</small>"]
-                end
+    subgraph Canales["4 · CANALES"]
+        WEB["Streamlit UI<br/><small>Instagram simulado</small>"]
+        TG["Telegram Bot<br/><small>Make + Gemini</small>"]
+        API["REST API<br/><small>agent_api.py · /v1/chat</small>"]
+    end
 
-                subgraph CRM["5 · CRM"]
-                    SF["Salesforce Simulado<br/><small>lead_service.py</small>"]
-                    EXPORT["Exportación CSV"]
-                end
+    subgraph CRM["5 · CRM"]
+        SF["Salesforce Simulado<br/><small>lead_service.py</small>"]
+        EXPORT["Exportación CSV"]
+    end
 
-                WEB --> A1
-                TG --> A1
-                API --> A1
-                FICHA --> SF
-                FICHA --> EXPORT
+    WEB --> A1
+    TG --> A1
+    API --> A1
+    FICHA --> SF
+    FICHA --> EXPORT
 
-                style Captura fill:#eef2ff,stroke:#6366f1
-                style Persistencia fill:#f0fdf4,stroke:#22c55e
-                style Agentes fill:#fef2f2,stroke:#ef4444
-                style Canales fill:#fefce8,stroke:#eab308
-                style CRM fill:#f5f3ff,stroke:#8b5cf6
-            ```
-            </div>
+    style Captura fill:#eef2ff,stroke:#6366f1
+    style Persistencia fill:#f0fdf4,stroke:#22c55e
+    style Agentes fill:#fef2f2,stroke:#ef4444
+    style Canales fill:#fefce8,stroke:#eab308
+    style CRM fill:#f5f3ff,stroke:#8b5cf6
             """,
-            unsafe_allow_html=True,
+            height=760,
         )
 
     with st.expander("🗄️ Modelo relacional de datos", expanded=True):
-        st.markdown(
+        render_mermaid(
             """
-            <div class="mermaid-wrap">
-            ```mermaid
-            erDiagram
-                VIVI_LEADS {
-                    str lead_code PK
-                    str full_name
-                    str id_type
-                    str id_number
-                    str income_range
-                    int income_monthly
-                    str affiliation_type
-                    bool affiliated
-                    str purchase_horizon
-                    str savings_range
-                    str preferred_project
-                    int bedrooms
-                    bool consent
-                    str source
-                    str campaign
-                    str campaign_id
-                    str ad_id
-                    str ad_name
-                    str utm_source
-                    str utm_campaign
-                    str utm_medium
-                    str utm_content
-                    str utm_term
-                    str meta_lead_id
-                    int score
-                    str rating
-                    str funnel_status
-                    str crm_status
-                    str telegram_username
-                    json financial_profile
-                    json scoring
-                    json diagnosis
-                    json profile_json
-                    int propensity_score
-                    str propensity_priority
-                    str created_at
-                    str updated_at
-                }
-                VIVI_INTEGRATION_EVENTS {
-                    str id PK
-                    str lead_code FK
-                    str event_type
-                    str status
-                    str payload
-                    str response
-                    str error_message
-                    str created_at
-                }
-                VIVI_LEADS ||--o{ VIVI_INTEGRATION_EVENTS : "genera"
-            ```
-            </div>
+erDiagram
+    VIVI_LEADS {
+        str lead_code PK
+        str full_name
+        str id_type
+        str id_number
+        str income_range
+        int income_monthly
+        str affiliation_type
+        bool affiliated
+        str purchase_horizon
+        str savings_range
+        str preferred_project
+        int bedrooms
+        bool consent
+        str source
+        str campaign
+        str campaign_id
+        str ad_id
+        str ad_name
+        str utm_source
+        str utm_campaign
+        str utm_medium
+        str utm_content
+        str utm_term
+        str meta_lead_id
+        int score
+        str rating
+        str funnel_status
+        str crm_status
+        str telegram_username
+        json financial_profile
+        json scoring
+        json diagnosis
+        json profile_json
+        int propensity_score
+        str propensity_priority
+        str created_at
+        str updated_at
+    }
+    VIVI_INTEGRATION_EVENTS {
+        str id PK
+        str lead_code FK
+        str event_type
+        str status
+        str payload
+        str response
+        str error_message
+        str created_at
+    }
+    VIVI_LEADS ||--o{ VIVI_INTEGRATION_EVENTS : "genera"
             """,
-            unsafe_allow_html=True,
+            height=900,
         )
 
     st.markdown(
