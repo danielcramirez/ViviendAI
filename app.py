@@ -501,6 +501,61 @@ st.markdown(
         .ops-grid { grid-template-columns:repeat(2,1fr); }
         .ops-crm-body { grid-template-columns:1fr; }
     }
+    .arch-hero {
+        background:linear-gradient(135deg,#1a1a2e 0%,#16213e 100%);
+        border-radius:24px;padding:var(--space-4);
+        margin:var(--space-2) 0 var(--space-3);
+        color:white;
+    }
+    .arch-hero h2 { margin:0;font-size:28px !important;color:white !important; }
+    .arch-hero p { margin:8px 0 0;font-size:15px;opacity:.8;color:#cbd5e1; }
+    .arch-card {
+        background:var(--white);border:1px solid #e2e7eb;
+        border-radius:20px;overflow:hidden;
+        box-shadow:var(--shadow-soft);margin:var(--space-2) 0 var(--space-3);
+    }
+    .arch-card-header {
+        padding:var(--space-2) var(--space-3);
+        background:#f8fbfd;border-bottom:1px solid #dfe6eb;
+        font-weight:800;font-size:16px;color:var(--graphite);
+        display:flex;align-items:center;gap:10px;
+    }
+    .arch-card-body {
+        padding:var(--space-3);
+    }
+    .arch-card-body p { font-size:15px !important;line-height:1.6 !important; }
+    .arch-table {
+        width:100%;border-collapse:collapse;
+        font-size:14px;line-height:1.5;
+    }
+    .arch-table th {
+        text-align:left;padding:10px 12px;
+        background:#f0f4f8;color:var(--graphite);
+        font-weight:700;font-size:12px;text-transform:uppercase;
+        letter-spacing:.04em;border-bottom:2px solid #dce4ea;
+    }
+    .arch-table td {
+        padding:10px 12px;border-bottom:1px solid #eef2f6;
+        color:var(--graphite);font-size:14px;
+    }
+    .arch-table tr:last-child td { border-bottom:0; }
+    .arch-table code {
+        background:#f0f4f8;padding:2px 6px;border-radius:6px;
+        font-size:13px;color:#00375f;
+    }
+    .arch-pill {
+        display:inline-block;padding:2px 10px;margin:1px 2px;
+        border-radius:99px;font-size:11px;font-weight:700;
+    }
+    .arch-pill.blue { background:#dbeafe;color:#1e40af; }
+    .arch-pill.green { background:#d1fae5;color:#065f46; }
+    .arch-pill.amber { background:#fef3c7;color:#92400e; }
+    .arch-pill.purple { background:#ede9fe;color:#5b21b6; }
+    .mermaid-wrap {
+        background:white;border-radius:16px;padding:var(--space-3);
+        border:1px solid #e2e7eb;overflow-x:auto;
+        margin:var(--space-2) 0;
+    }
     .stage.active {
         background:#000;border-color:#000;color:#fff;
         box-shadow:inset 0 -6px 0 var(--col-yellow);
@@ -1752,7 +1807,15 @@ elif section == "Centro de operaciones":
         csv = df.to_csv(index=False).encode("utf-8")
         st.download_button("Descargar leads en CSV", csv, "meta_leads_capture.csv", "text/csv")
 
-        st.subheader("Seguimiento simulado en Salesforce")
+        st.markdown(
+            """
+            <div class="ops-section-header">
+              <h3>☁️ Seguimiento simulado en Salesforce</h3>
+              <span>actualización manual de la etapa comercial</span>
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
         stage_columns = st.columns(2)
         selected_lead = stage_columns[0].selectbox(
             "Lead",
@@ -1775,7 +1838,15 @@ elif section == "Centro de operaciones":
             st.success(f"{selected_lead} actualizado a {selected_stage}.")
             st.rerun()
 
-        st.subheader("Efectividad por campaña y fuente")
+        st.markdown(
+            """
+            <div class="ops-section-header">
+              <h3>📈 Efectividad por campaña y fuente</h3>
+              <span>rendimiento agregado por origen de tráfico</span>
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
         performance = pd.DataFrame(get_campaign_performance())
         if not performance.empty:
             performance = performance.fillna("—").replace({"": "—", "None": "—"})
@@ -1804,7 +1875,15 @@ elif section == "Centro de operaciones":
     else:
         st.info("Aún no hay leads. Completa el formulario en la experiencia del cliente.")
 
-    st.subheader("Trazabilidad técnica")
+    st.markdown(
+        """
+        <div class="ops-section-header">
+          <h3>🔍 Trazabilidad técnica</h3>
+          <span>eventos de integración del sistema</span>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
     events = list_events()
     if events:
         events_df = pd.DataFrame(events).fillna("—").replace({"": "—", "None": "—"})
