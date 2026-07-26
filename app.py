@@ -58,7 +58,9 @@ st.markdown(
         --space-1:8px; --space-2:16px; --space-3:24px; --space-4:32px;
         --shadow-soft:0 10px 30px rgba(0,72,126,.10);
     }
-    html, body, [class*="st-"], [class*="stApp"] {
+    html, body, .stApp,
+    [data-testid="stMarkdownContainer"],
+    input, textarea, select, button {
         font-family:Inter,Roboto,"Segoe UI",Arial,sans-serif;
     }
     .block-container {
@@ -79,6 +81,40 @@ st.markdown(
     [data-testid="InputInstructions"] { display:none; }
     [data-testid="stSidebar"] {
         background:#080808;border-right:1px solid rgba(255,255,255,.12);
+    }
+    [data-testid="stSidebarHeader"] {
+        min-height:64px;padding:12px 14px !important;
+        background:#080808;box-sizing:border-box;
+        display:flex;align-items:center;
+    }
+    [data-testid="stSidebarCollapseButton"] {
+        margin-left:auto;flex:0 0 auto;
+    }
+    [data-testid="stSidebarCollapseButton"]
+    [data-testid="stBaseButton-headerNoPadding"] {
+        width:40px;height:40px;min-width:40px;
+        display:flex;align-items:center;justify-content:center;
+        padding:0 !important;border:1px solid rgba(255,208,0,.55);
+        border-radius:12px;background:rgba(255,208,0,.14);
+        color:#ffffff !important;
+    }
+    [data-testid="stSidebarCollapseButton"]
+    [data-testid="stBaseButton-headerNoPadding"]:hover {
+        background:var(--col-yellow);border-color:var(--col-yellow);
+    }
+    [data-testid="stSidebarCollapseButton"]
+    [data-testid="stIconMaterial"] {
+        width:24px;height:24px;margin:0 !important;padding:0 !important;
+        overflow:hidden;white-space:nowrap;
+        color:#ffffff !important;font-size:24px !important;
+        line-height:24px !important;
+        font-family:"Material Symbols Rounded","Material Symbols Outlined" !important;
+        font-weight:400 !important;
+    }
+    [data-testid="stSidebarCollapseButton"]
+    [data-testid="stBaseButton-headerNoPadding"]:hover
+    [data-testid="stIconMaterial"] {
+        color:#000000 !important;
     }
     [data-testid="stSidebar"] h1,
     [data-testid="stSidebar"] h2,
@@ -1054,7 +1090,7 @@ if section == "Experiencia del cliente":
                     new_fields = _count_new_profile_fields(profile_before, profile)
                     current_turn = max(len(st.session_state.instagram_messages) // 2, 0)
                     turns_since_last = current_turn - st.session_state.instagram_last_agent2_turn
-                    should_analyze = new_fields >= 1 or (current_turn >= 3 and turns_since_last >= 3)
+                    should_analyze = new_fields >= 2 or (current_turn >= 5 and turns_since_last >= 5)
                     agent2_result = st.session_state.instagram_agent2_result
                     if should_analyze:
                         full_history = "\n".join(
