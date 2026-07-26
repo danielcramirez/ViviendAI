@@ -1890,27 +1890,271 @@ elif section == "Centro de operaciones":
         with st.expander("Ver eventos técnicos de integración"):
             st.dataframe(events_df, width="stretch", hide_index=True)
 
-else:
-    st.subheader("Arquitectura funcional")
-    st.code(
+    st.markdown(
         """
-META ADS / INSTAGRAM · Proyecto de vivienda
-        │ CTA
-        ▼
-META LEAD FORM
-        │ POST JSON · 1.5 s
-        ▼
-VALIDACIÓN + NORMALIZACIÓN + PERFILAMIENTO EXPLICABLE
-        │ INSERT INTO
-        ▼
-SQLite: META_LEADS_CAPTURE  ⇄  SAP HANA Cloud (gemelo digital)
-        │ payload mapeado
-        ▼
-Salesforce Lead API / AppExchange / Make / Zapier
-        """.strip(),
-        language=None,
+        <div class="arch-hero">
+          <h2>🏛️ Arquitectura del sistema</h2>
+          <p>VIVI · ViviendAI — Arquitectura orientada a agentes con perfilamiento inteligente,
+          scoring determinístico y persistencia híbrida SQLite + Supabase.</p>
+        </div>
+        """,
+        unsafe_allow_html=True,
     )
-    st.subheader("Ejemplo de webhook")
+
+    with st.expander("📐 Diagrama de arquitectura", expanded=True):
+        st.markdown(
+            """
+            <div class="mermaid-wrap">
+            ```mermaid
+            flowchart TB
+                subgraph Captura["1 · CAPTURA"]
+                    META["Meta Ads / Instagram<br/><small>Anuncio personalizado</small>"] --> FORM["Formulario instantáneo<br/><small>Streamlit</small>"]
+                    FORM --> LEAD["lead_service.py<br/><small>capture_lead()</small>"]
+                end
+
+                subgraph Persistencia["2 · PERSISTENCIA"]
+                    LEAD --> SQLITE["SQLite<br/><small>leads.db · respaldo local</small>"]
+                    SQLITE --> SUPABASE["Supabase PostgreSQL<br/><small>vivi_leads · vivi_integration_events</small>"]
+                end
+
+                subgraph Agentes["3 · AGENTES IA"]
+                    direction TB
+                    A1["Agente 1 · Consultor Empático<br/><small>vivi_agent_service.py</small>"] --> |"Extrae perfil"| A2["Agente 2 · Analista de Perfilamiento<br/><small>analista_perfilamiento.py</small>"]
+                    A2 --> SCORING["profiling_service.py<br/><small>calculate_propensity()</small>"]
+                    SCORING --> FICHA["Ficha del Sueño<br/><small>build_diagnosis()</small>"]
+                end
+
+                subgraph Canales["4 · CANALES"]
+                    WEB["Streamlit UI<br/><small>Instagram simulado</small>"]
+                    TG["Telegram Bot<br/><small>Make + Gemini</small>"]
+                    API["REST API<br/><small>agent_api.py · /v1/chat</small>"]
+                end
+
+                subgraph CRM["5 · CRM"]
+                    SF["Salesforce Simulado<br/><small>lead_service.py</small>"]
+                    EXPORT["Exportación CSV"]
+                end
+
+                WEB --> A1
+                TG --> A1
+                API --> A1
+                FICHA --> SF
+                FICHA --> EXPORT
+
+                style Captura fill:#eef2ff,stroke:#6366f1
+                style Persistencia fill:#f0fdf4,stroke:#22c55e
+                style Agentes fill:#fef2f2,stroke:#ef4444
+                style Canales fill:#fefce8,stroke:#eab308
+                style CRM fill:#f5f3ff,stroke:#8b5cf6
+            ```
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
+
+    with st.expander("🗄️ Modelo relacional de datos", expanded=True):
+        st.markdown(
+            """
+            <div class="mermaid-wrap">
+            ```mermaid
+            erDiagram
+                VIVI_LEADS {
+                    str lead_code PK
+                    str full_name
+                    str id_type
+                    str id_number
+                    str income_range
+                    int income_monthly
+                    str affiliation_type
+                    bool affiliated
+                    str purchase_horizon
+                    str savings_range
+                    str preferred_project
+                    int bedrooms
+                    bool consent
+                    str source
+                    str campaign
+                    str campaign_id
+                    str ad_id
+                    str ad_name
+                    str utm_source
+                    str utm_campaign
+                    str utm_medium
+                    str utm_content
+                    str utm_term
+                    str meta_lead_id
+                    int score
+                    str rating
+                    str funnel_status
+                    str crm_status
+                    str telegram_username
+                    json financial_profile
+                    json scoring
+                    json diagnosis
+                    json profile_json
+                    int propensity_score
+                    str propensity_priority
+                    str created_at
+                    str updated_at
+                }
+                VIVI_INTEGRATION_EVENTS {
+                    str id PK
+                    str lead_code FK
+                    str event_type
+                    str status
+                    str payload
+                    str response
+                    str error_message
+                    str created_at
+                }
+                VIVI_LEADS ||--o{ VIVI_INTEGRATION_EVENTS : "genera"
+            ```
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
+
+    st.markdown(
+        """
+        <div class="arch-card">
+          <div class="arch-card-header">📡 Endpoints de la API REST</div>
+          <div class="arch-card-body">
+            <table class="arch-table">
+              <thead>
+                <tr>
+                  <th>Método</th>
+                  <th>Ruta</th>
+                  <th>Descripción</th>
+                  <th>Autenticación</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>GET</code></td>
+                  <td><code>/health</code></td>
+                  <td>Health check del servicio · retorna <code>{"status": "ok"}</code></td>
+                  <td><span class="arch-pill green">Pública</span></td>
+                </tr>
+                <tr>
+                  <td><code>POST</code></td>
+                  <td><code>/v1/chat</code></td>
+                  <td>Envía un mensaje del cliente y obtiene respuesta de VIVI (Agente 1)</td>
+                  <td><span class="arch-pill amber">API Key</span></td>
+                </tr>
+                <tr>
+                  <td><code>POST</code></td>
+                  <td><code>/v1/profile</code></td>
+                  <td>Ejecuta el análisis completo de perfilamiento (Agente 2)</td>
+                  <td><span class="arch-pill amber">API Key</span></td>
+                </tr>
+              </tbody>
+            </table>
+            <p style="margin-top:12px;font-size:13px !important;color:var(--graphite);opacity:.7;">
+              La API corre en el mismo contenedor de Streamlit (puerto 8080 en Cloud Run).
+              <code>agent_api.py</code> es un servidor FastAPI independiente que comparte los servicios de lead, perfilamiento y scoring.
+            </p>
+          </div>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+
+    st.markdown(
+        """
+        <div class="arch-card">
+          <div class="arch-card-header">⚙️ Stack tecnológico</div>
+          <div class="arch-card-body">
+            <table class="arch-table">
+              <thead>
+                <tr>
+                  <th>Componente</th>
+                  <th>Tecnología</th>
+                  <th>Propósito</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Frontend</td>
+                  <td><span class="arch-pill blue">Streamlit</span> <span class="arch-pill purple">Python</span></td>
+                  <td>Interfaz de usuario interactiva · despliegue inmediato</td>
+                </tr>
+                <tr>
+                  <td>API Server</td>
+                  <td><span class="arch-pill blue">FastAPI</span> <span class="arch-pill purple">Uvicorn</span></td>
+                  <td>Endpoints REST para Telegram y webhooks de Make</td>
+                </tr>
+                <tr>
+                  <td>IA Conversacional</td>
+                  <td><span class="arch-pill green">Gemini 2.5 Flash</span></td>
+                  <td>Agente 1 (consulta) y Agente 2 (extracción estructurada)</td>
+                </tr>
+                <tr>
+                  <td>Scoring</td>
+                  <td><span class="arch-pill purple">Python determinístico</span></td>
+                  <td>profiling_service.py · 6 dimensiones · 0-100 auditable</td>
+                </tr>
+                <tr>
+                  <td>Base de datos cloud</td>
+                  <td><span class="arch-pill blue">Supabase</span> <span class="arch-pill amber">PostgreSQL</span></td>
+                  <td>Persistencia principal con RLS habilitado</td>
+                </tr>
+                <tr>
+                  <td>Base de datos local</td>
+                  <td><span class="arch-pill amber">SQLite</span></td>
+                  <td>Respaldo operativo · gemelo digital de SAP HANA Cloud</td>
+                </tr>
+                <tr>
+                  <td>Orquestación</td>
+                  <td><span class="arch-pill blue">Make</span></td>
+                  <td>Webhooks · Telegram · contexto conversacional</td>
+                </tr>
+                <tr>
+                  <td>Despliegue</td>
+                  <td><span class="arch-pill green">Cloud Run</span> <span class="arch-pill blue">Docker</span></td>
+                  <td>Contenedor serverless · escalado automático · 3 instancias máx</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+
+    st.markdown(
+        """
+        <div class="arch-card">
+          <div class="arch-card-header">🔄 Flujo de datos extremo a extremo</div>
+          <div class="arch-card-body">
+            <p><strong>1. Captura:</strong> El lead interactúa con un anuncio simulado de Meta Ads,
+            completa un formulario de 60 segundos y otorga consentimiento explícito de Habeas Data.</p>
+            <p><strong>2. Persistencia:</strong> <code>lead_service.py</code> normaliza, califica y persiste
+            en SQLite (respaldo local) y Supabase PostgreSQL (nube principal) con RLS habilitado.</p>
+            <p><strong>3. Perfilamiento conversacional:</strong> El Agente 1 (VIVI) conversa con el cliente
+            a través de Instagram simulado o Telegram, extrayendo hasta 16 campos del perfil de vivienda
+            mediante Gemini. Una pregunta por turno, sin datos bancarios ni dirección exacta.</p>
+            <p><strong>4. Análisis estructurado:</strong> El Agente 2 consolida el perfil, valida contra
+            el schema JSON, ejecuta scoring determinístico en 6 dimensiones (intención, horizonte,
+            preparación financiera, encaje, engagement, siguiente paso) y genera la Ficha del Sueño.</p>
+            <p><strong>5. CRM:</strong> El lead enriquecido se entrega a Salesforce simulado con score,
+            prioridad, ruta comercial y diagnóstico para que el asesor actúe informado.</p>
+          </div>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+
+    st.markdown(
+        """
+        <div class="arch-card">
+          <div class="arch-card-header">📤 Ejemplo de payload — Webhook de captura</div>
+          <div class="arch-card-body">
+            <p style="font-size:13px !important;color:var(--graphite);opacity:.7;margin:0 0 12px;">
+              JSON enviado por el formulario de Meta Ads simulado a <code>capture_lead()</code>.
+            </p>
+        """,
+        unsafe_allow_html=True,
+    )
     sample = {
         "full_name": "Laura Martínez",
         "id_type": "Cédula de ciudadanía",
@@ -1927,8 +2171,15 @@ Salesforce Lead API / AppExchange / Make / Zapier
         "campaign": "VIVIENDA_SAMAN_VIS",
     }
     st.code(json.dumps(sample, ensure_ascii=False, indent=2), language="json")
-    st.caption(
-        "El reto simula las integraciones: no consulta DataCrédito, cuentas bancarias ni aprueba "
-        "créditos. En producción se requerirían OAuth 2.0, cifrado de secretos, consentimiento "
-        "versionado, reintentos y monitoreo centralizado."
+    st.markdown(
+        """
+            <p style="margin-top:12px;font-size:13px !important;color:var(--graphite);opacity:.65;">
+              El prototipo simula las integraciones: no consulta DataCrédito, cuentas bancarias ni
+              aprueba créditos. En producción se requerirían OAuth 2.0, cifrado de secretos,
+              consentimiento versionado, reintentos y monitoreo centralizado.
+            </p>
+          </div>
+        </div>
+        """,
+        unsafe_allow_html=True,
     )
