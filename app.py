@@ -115,7 +115,7 @@ st.markdown(
     }
     .hero h1 {
         position:relative;z-index:1;margin:0;max-width:790px;
-        font-size:clamp(48px,6vw,82px) !important;line-height:.98 !important;
+        font-size:clamp(48px,6vw,82px) !important;line-height:1.05 !important;
         color:white;letter-spacing:-.055em;
     }
     .hero p {
@@ -239,21 +239,38 @@ st.markdown(
     [data-testid="stExpander"] details > summary {
         min-height:56px;padding:12px 16px !important;
         display:flex;align-items:center;gap:12px;
+        box-sizing:border-box;overflow:hidden;
         background:#f8f9fa;border-bottom:0;
+    }
+    [data-testid="stExpander"] details > summary > span {
+        display:flex;align-items:center;gap:12px;
+        min-width:0;flex:1 1 auto;
+    }
+    [data-testid="stExpander"] details > summary
+    [data-testid="stMarkdownContainer"] {
+        min-width:0;flex:1 1 auto;
     }
     [data-testid="stExpander"] details[open] > summary {
         border-bottom:1px solid #dfe6eb;
         box-shadow:inset 0 -3px 0 var(--col-yellow);
     }
-    [data-testid="stExpander"] details > summary p,
-    [data-testid="stExpander"] details > summary span {
+    [data-testid="stExpander"] details > summary
+    [data-testid="stMarkdownContainer"] p {
         margin:0 !important;padding:0 !important;
         color:var(--graphite) !important;font-size:16px !important;
         font-weight:700 !important;line-height:1.25 !important;
+        white-space:normal;overflow-wrap:anywhere;
     }
     [data-testid="stExpander"] details > summary svg {
         flex:0 0 20px;width:20px;height:20px;
         color:var(--col-blue);
+    }
+    [data-testid="stExpander"] details > summary
+    [data-testid="stExpanderIconCheck"] {
+        flex:0 0 20px !important;width:20px !important;height:20px !important;
+        margin:0 !important;padding:0 !important;overflow:hidden;
+        color:var(--col-blue) !important;font-size:20px !important;
+        line-height:20px !important;
     }
     [data-testid="stExpanderDetails"] {
         padding:var(--space-2) !important;
@@ -496,13 +513,14 @@ st.markdown(
     }
     @media (max-width:768px) {
         .block-container { padding:var(--space-2); }
-        h1, h2, .hero h1 { font-size:clamp(32px,9vw,42px) !important; }
+        h1, h2, .hero h1 { font-size:clamp(28px,8vw,42px) !important; }
         .hero { padding:var(--space-3);border-radius:18px; }
         .stApp p, [data-testid="stChatMessageContent"] p { font-size:18px; }
         [data-testid="stChatMessage"] { margin-left:0 !important;margin-right:0 !important; }
         .feature-strip { grid-template-columns:1fr; }
         .impact-grid { grid-template-columns:1fr; }
-        .hero { min-height:420px;padding:var(--space-3); }
+        .hero { min-height:460px;padding:var(--space-3); }
+        .hero h1 { line-height:1.15 !important; }
         .hero::before { width:230px;height:230px;right:-75px;top:-55px; }
         .hero::after { right:20px;bottom:24px;font-size:44px;letter-spacing:-4px; }
         [data-testid="stForm"] { padding:var(--space-2); }
@@ -1036,7 +1054,7 @@ if section == "Experiencia del cliente":
                     new_fields = _count_new_profile_fields(profile_before, profile)
                     current_turn = max(len(st.session_state.instagram_messages) // 2, 0)
                     turns_since_last = current_turn - st.session_state.instagram_last_agent2_turn
-                    should_analyze = new_fields >= 2 or (current_turn >= 5 and turns_since_last >= 5)
+                    should_analyze = new_fields >= 1 or (current_turn >= 3 and turns_since_last >= 3)
                     agent2_result = st.session_state.instagram_agent2_result
                     if should_analyze:
                         full_history = "\n".join(
