@@ -86,17 +86,21 @@ st.markdown(
         min-height:64px;padding:12px 14px !important;
         background:#080808;box-sizing:border-box;
         display:flex;align-items:center;
+        opacity:1 !important;visibility:visible !important;
     }
     [data-testid="stSidebarCollapseButton"] {
         margin-left:auto;flex:0 0 auto;
+        opacity:1 !important;visibility:visible !important;
+        pointer-events:auto !important;
     }
     [data-testid="stSidebarCollapseButton"]
     [data-testid="stBaseButton-headerNoPadding"] {
         width:40px;height:40px;min-width:40px;
         display:flex;align-items:center;justify-content:center;
         padding:0 !important;border:1px solid rgba(255,208,0,.55);
-        border-radius:12px;background:rgba(255,208,0,.14);
-        color:#ffffff !important;
+        border-radius:12px;background:var(--col-yellow) !important;
+        color:#000000 !important;opacity:1 !important;
+        visibility:visible !important;
     }
     [data-testid="stSidebarCollapseButton"]
     [data-testid="stBaseButton-headerNoPadding"]:hover {
@@ -106,10 +110,16 @@ st.markdown(
     [data-testid="stIconMaterial"] {
         width:24px;height:24px;margin:0 !important;padding:0 !important;
         overflow:hidden;white-space:nowrap;
-        color:#ffffff !important;font-size:24px !important;
+        color:#000000 !important;font-size:24px !important;
         line-height:24px !important;
         font-family:"Material Symbols Rounded","Material Symbols Outlined" !important;
         font-weight:400 !important;
+        opacity:1 !important;visibility:visible !important;
+    }
+    [data-testid="stSidebarCollapseButton"]
+    [data-testid="stBaseButton-headerNoPadding"] span {
+        color:#000000 !important;opacity:1 !important;
+        visibility:visible !important;
     }
     [data-testid="stSidebarCollapseButton"]
     [data-testid="stBaseButton-headerNoPadding"]:hover
@@ -126,6 +136,11 @@ st.markdown(
     }
     [data-testid="stSidebar"] [role="radiogroup"] label p {
         color: #f7fbff;
+    }
+    [data-testid="stSidebar"] .small-muted,
+    [data-testid="stSidebar"] [data-testid="stCaptionContainer"],
+    [data-testid="stSidebar"] [data-testid="stCaptionContainer"] p {
+        color:#cbd8e2 !important;opacity:1 !important;
     }
     .hero {
         position:relative;overflow:hidden;min-height:330px;
