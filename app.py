@@ -26,6 +26,7 @@ from lead_service import (
     capture_lead,
     get_campaign_performance,
     get_dashboard_metrics,
+    get_storage_status,
     init_db,
     list_events,
     list_leads,
@@ -34,6 +35,7 @@ from lead_service import (
     update_funnel_status,
 )
 from profiling_service import build_diagnosis, calculate_propensity
+from agents.analista_perfilamiento import EXTRACTABLE_FIELDS, analyze_profile
 from vivi_agent_service import request_agent_reply
 
 APP_DIR = Path(__file__).resolve().parent
@@ -400,6 +402,93 @@ st.markdown(
         background:white;border-radius:16px;padding:.75rem;color:var(--graphite);
         border:1px solid rgba(255,255,255,.35);
     }
+    .agent2-divider {
+        height:1px;background:linear-gradient(90deg,transparent,var(--col-blue),transparent);
+        margin:var(--space-2) 0;border:0;
+    }
+    .agent2-card {
+        background:var(--white);border:2px solid var(--col-blue);
+        border-radius:18px;overflow:hidden;margin:var(--space-2) 0 var(--space-3);
+        box-shadow:0 8px 24px rgba(0,103,177,.10);
+    }
+    .agent2-header {
+        display:flex;align-items:center;gap:10px;
+        padding:14px 18px;background:#f0f6fe;
+        border-bottom:1px solid #d0ddea;
+    }
+    .agent2-icon {
+        width:32px;height:32px;flex:0 0 32px;border-radius:50%;
+        background:var(--col-blue);color:#fff;
+        display:grid;place-items:center;font-size:16px;font-weight:900;
+    }
+    .agent2-title {
+        font-weight:800;font-size:15px;color:var(--graphite);
+    }
+    .agent2-body {
+        padding:var(--space-2) var(--space-2) var(--space-3);
+    }
+    .agent2-metrics {
+        display:grid;grid-template-columns:repeat(3,minmax(0,1fr));
+        gap:var(--space-2);
+    }
+    .agent2-metric {
+        text-align:center;padding:var(--space-1) var(--space-2);
+    }
+    .agent2-metric-value {
+        display:block;font-size:20px;font-weight:900;color:#000;
+        line-height:1.2;
+    }
+    .agent2-metric-label {
+        display:block;font-size:11px;color:var(--graphite);
+        font-weight:700;text-transform:uppercase;letter-spacing:.04em;
+        margin-top:2px;
+    }
+    .agent2-recommended {
+        margin-top:var(--space-2);padding:var(--space-1) var(--space-2);
+        background:#eef6ff;border-radius:12px;
+        border-left:4px solid var(--col-blue);
+        font-size:15px;line-height:1.5;color:var(--graphite);
+    }
+    .agent2-missing {
+        margin:var(--space-1) var(--space-2) var(--space-2);
+        font-size:14px;line-height:1.8;color:var(--graphite);
+    }
+    .agent2-pill {
+        display:inline-block;padding:2px 10px;margin:2px 4px 2px 0;
+        background:#fef3cd;color:#856404;border-radius:99px;
+        font-size:12px;font-weight:700;white-space:nowrap;
+    }
+    .agent2-diagnosis {
+        margin-top:var(--space-2);padding:var(--space-1) var(--space-2);
+        background:rgba(255,208,0,.15);border-radius:12px;
+        border-left:4px solid var(--col-yellow);
+        font-size:15px;line-height:1.5;color:var(--graphite);
+    }
+    .agent2-persistence {
+        display:flex;align-items:center;gap:8px;
+        margin:var(--space-1) var(--space-2) var(--space-2);
+        font-size:13px;line-height:1.5;color:var(--graphite);
+    }
+    .persistence-badge {
+        display:inline-block;padding:1px 10px;border-radius:99px;
+        font-size:11px;font-weight:800;letter-spacing:.02em;
+    }
+    .persistence-ok {
+        background:#d4edda;color:#155724;
+    }
+    .persistence-local {
+        background:#fff3cd;color:#856404;
+    }
+    .persistence-error {
+        background:#f8d7da;color:#721c24;
+    }
+    .agent2-missing strong, .agent2-recommended strong, .agent2-diagnosis strong,
+    .agent2-persistence strong {
+        color:var(--graphite);
+    }
+    @media (max-width:768px) {
+        .agent2-metrics { grid-template-columns:repeat(2,1fr); }
+    }
     button:focus-visible, input:focus-visible, textarea:focus-visible,
     [data-baseweb="select"]:focus-within {
         outline:3px solid rgba(255,208,0,.70) !important;
@@ -449,6 +538,22 @@ if "instagram_profile" not in st.session_state:
     st.session_state.instagram_profile = None
 if "instagram_lead_code" not in st.session_state:
     st.session_state.instagram_lead_code = None
+if "instagram_agent2_result" not in st.session_state:
+    st.session_state.instagram_agent2_result = None
+if "instagram_last_agent2_turn" not in st.session_state:
+    st.session_state.instagram_last_agent2_turn = 0
+
+
+def _count_new_profile_fields(old: dict, new: dict) -> int:
+    """Count how many Agent-2-extractable fields changed from empty to filled."""
+    count = 0
+    for key in EXTRACTABLE_FIELDS:
+        old_val = old.get(key) if isinstance(old, dict) else None
+        new_val = new.get(key) if isinstance(new, dict) else None
+        if old_val in (None, "", [], {}) and new_val not in (None, "", [], {}):
+            count += 1
+    return count
+
 
 with st.sidebar:
     st.image(str(LOGO_V2), width="stretch")
@@ -922,14 +1027,54 @@ if section == "Experiencia del cliente":
                         profile["integration_warning"] = str(error)
                     scoring = calculate_propensity(profile)
                     diagnosis = build_diagnosis(profile, scoring)
+
+                    # --- Agent 2: análisis de perfilamiento activado por nuevos campos o turnos ---
+                    profile_before = dict(st.session_state.instagram_profile or {})
+                    new_fields = _count_new_profile_fields(profile_before, profile)
+                    current_turn = max(len(st.session_state.instagram_messages) // 2, 0)
+                    turns_since_last = current_turn - st.session_state.instagram_last_agent2_turn
+                    should_analyze = new_fields >= 2 or (current_turn >= 5 and turns_since_last >= 5)
+                    agent2_result = st.session_state.instagram_agent2_result
+                    if should_analyze:
+                        full_history = "\n".join(
+                            f"{'VIVI' if item['role'] == 'assistant' else 'USUARIO'}: "
+                            f"{item['content']}"
+                            for item in st.session_state.instagram_messages
+                        )
+                        try:
+                            agent2_result = analyze_profile(
+                                lead_id=result["lead_code"],
+                                channel="instagram_simulado",
+                                customer_name=profile.get("customer_name", ""),
+                                project_origin=profile.get("project_origin", ""),
+                                campaign_id=profile.get("campaign_id", ""),
+                                history=full_history,
+                                profile=profile,
+                                force=True,
+                            )
+                            st.session_state.instagram_agent2_result = agent2_result
+                            st.session_state.instagram_last_agent2_turn = current_turn
+                        except RuntimeError as exc:
+                            agent2_result = {
+                                "ok": False,
+                                "reply_warning": str(exc),
+                                "gemini_source": None,
+                            }
+                            st.session_state.instagram_agent2_result = agent2_result
+                    # --- fin Agente 2 ---
+
                     profile["scoring"] = scoring
                     profile["diagnosis"] = diagnosis
-                    profile["crm_status"] = save_conversation_profile(
-                        result["lead_code"],
-                        profile,
-                        scoring,
-                        diagnosis,
-                    )
+                    # Si Agent 2 ya persistió, evitamos duplicar la escritura
+                    if should_analyze and agent2_result and agent2_result.get("ok"):
+                        profile["crm_status"] = agent2_result.get("crm_status", "SYNCED")
+                    else:
+                        profile["crm_status"] = save_conversation_profile(
+                            result["lead_code"],
+                            profile,
+                            scoring,
+                            diagnosis,
+                        )
                     result["crm_status"] = profile["crm_status"]
                     st.session_state.last_result = result
                     st.session_state.instagram_profile = profile
@@ -983,6 +1128,136 @@ if section == "Experiencia del cliente":
                         st.json(scoring)
                     with st.expander("Datos estructurados obtenidos por VIVI"):
                         st.json(profile)
+
+                    # --- Agente 2: resultados del análisis de perfilamiento ---
+                    # Botón explícito de actualización
+                    if st.button(
+                        "🔄 Actualizar análisis de perfilamiento",
+                        key="agent2_refresh",
+                        type="secondary",
+                    ):
+                        full_history = "\n".join(
+                            f"{'VIVI' if item['role'] == 'assistant' else 'USUARIO'}: "
+                            f"{item['content']}"
+                            for item in st.session_state.instagram_messages
+                        )
+                        with st.spinner("Ejecutando análisis del Agente 2…"):
+                            try:
+                                fresh = analyze_profile(
+                                    lead_id=st.session_state.last_result["lead_code"],
+                                    channel="instagram_simulado",
+                                    customer_name=profile.get("customer_name", ""),
+                                    project_origin=profile.get("project_origin", ""),
+                                    campaign_id=profile.get("campaign_id", ""),
+                                    history=full_history,
+                                    profile=profile,
+                                    force=True,
+                                )
+                                st.session_state.instagram_agent2_result = fresh
+                                current_turn = max(
+                                    len(st.session_state.instagram_messages) // 2, 0
+                                )
+                                st.session_state.instagram_last_agent2_turn = current_turn
+                                st.rerun()
+                            except RuntimeError as exc:
+                                st.error(f"Agente 2 falló: {exc}")
+
+                    agent2 = st.session_state.instagram_agent2_result
+                    if agent2 and agent2.get("ok"):
+                        a2_scoring = agent2.get("scoring", {})
+                        a2_profile = agent2.get("profile", {})
+                        a2_missing = a2_scoring.get("missing_fields", [])
+                        a2_action = a2_scoring.get("recommended_action", "")
+                        filled_count = sum(
+                            1 for k in EXTRACTABLE_FIELDS
+                            if a2_profile.get(k) not in (None, "", [], {})
+                        )
+                        st.markdown("<div class='agent2-divider'></div>", unsafe_allow_html=True)
+                        st.markdown(
+                            f"""
+                            <div class="agent2-card">
+                              <div class="agent2-header">
+                                <span class="agent2-icon">◇</span>
+                                <span class="agent2-title">Agente 2 · Analista de Perfilamiento</span>
+                              </div>
+                              <div class="agent2-body">
+                                <div class="agent2-metrics">
+                                  <div class="agent2-metric">
+                                    <span class="agent2-metric-value">{a2_scoring.get("propensity_score", "—")}/100</span>
+                                    <span class="agent2-metric-label">Score VIVI</span>
+                                  </div>
+                                  <div class="agent2-metric">
+                                    <span class="agent2-metric-value">{a2_scoring.get("priority", "—")}</span>
+                                    <span class="agent2-metric-label">Prioridad</span>
+                                  </div>
+                                  <div class="agent2-metric">
+                                    <span class="agent2-metric-value">{filled_count}/16</span>
+                                    <span class="agent2-metric-label">Campos extraídos</span>
+                                  </div>
+                                  <div class="agent2-metric">
+                                    <span class="agent2-metric-value">{agent2.get("gemini_source", "—")}</span>
+                                    <span class="agent2-metric-label">Fuente</span>
+                                  </div>
+                                  <div class="agent2-metric">
+                                    <span class="agent2-metric-value">{html.escape(a2_scoring.get("route", "—"))}</span>
+                                    <span class="agent2-metric-label">Ruta</span>
+                                  </div>
+                                  <div class="agent2-metric">
+                                    <span class="agent2-metric-value">{html.escape(str(agent2.get("crm_status", "—")))}</span>
+                                    <span class="agent2-metric-label">CRM</span>
+                                  </div>
+                                </div>
+                                <div class="agent2-recommended">
+                                  <strong>Acción recomendada:</strong> {html.escape(a2_action)}
+                                </div>
+                                <div class="agent2-diagnosis">
+                                  <strong>Ficha del Sueño:</strong> {html.escape(agent2.get("diagnosis", ""))}
+                                </div>
+                              </div>
+                            </div>
+                            """,
+                            unsafe_allow_html=True,
+                        )
+                        if a2_missing:
+                            pills = " ".join(
+                                f'<span class="agent2-pill">{html.escape(m)}</span>'
+                                for m in a2_missing
+                            )
+                            st.markdown(
+                                f'<div class="agent2-missing"><strong>Campos faltantes:</strong> {pills}</div>',
+                                unsafe_allow_html=True,
+                            )
+                        # Estado de persistencia (independiente del CRM)
+                        _storage = get_storage_status()
+                        if _storage.get("cloud_enabled"):
+                            _persist_text = "SUPABASE + SQLITE"
+                            _persist_class = "persistence-ok"
+                        else:
+                            _persist_text = "SOLO SQLITE"
+                            _persist_class = "persistence-local"
+                        _last = st.session_state.last_result
+                        if _last and _last.get("storage_warning"):
+                            _persist_text = "ERROR DE SINCRONIZACIÓN"
+                            _persist_class = "persistence-error"
+                        st.markdown(
+                            f"""
+                            <div class="agent2-persistence">
+                              <strong>Persistencia:</strong>
+                              <span class="persistence-badge {_persist_class}">{html.escape(_persist_text)}</span>
+                            </div>
+                            """,
+                            unsafe_allow_html=True,
+                        )
+
+                        if agent2.get("schema_errors"):
+                            st.warning(f"Errores de validación del schema: {'; '.join(agent2['schema_errors'])}")
+                        with st.expander("Ver desglose auditable del score"):
+                            st.json(a2_scoring)
+                        with st.expander("Perfil completo extraído por Agente 2"):
+                            st.json(a2_profile)
+                    elif agent2 and agent2.get("ok") is False:
+                        st.info("Agente 2 no disponible en este momento (Gemini no respondió).")
+
 
 elif section == "Catálogo de proyectos":
     catalog = get_catalog()
