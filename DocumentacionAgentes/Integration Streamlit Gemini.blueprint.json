@@ -1,0 +1,153 @@
+{
+  "name": "VIVI - Streamlit Instagram Simulado",
+  "flow": [
+    {
+      "id": 1,
+      "module": "gateway:CustomWebHook",
+      "version": 1,
+      "parameters": {
+        "hook": 2619578,
+        "maxResults": 1
+      },
+      "mapper": {},
+      "metadata": {
+        "designer": {
+          "x": -300,
+          "y": 0
+        },
+        "restore": {
+          "parameters": {
+            "hook": {
+              "label": "CREAR_WEBHOOK_STREAMLIT"
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": 2,
+      "module": "gemini-ai:createACompletionGeminiPro",
+      "version": 1,
+      "parameters": {
+        "__IMTCONN__": 10095927
+      },
+      "mapper": {
+        "model": "gemini-3.5-flash",
+        "contents": [
+          {
+            "role": "user",
+            "parts": [
+              {
+                "type": "text",
+                "text": "CANAL:\r\n{{1.channel}}\r\n\r\nLEAD:\r\n{{1.lead_id}}\r\n\r\nNOMBRE:\r\n{{1.customer_name}}\r\n\r\nPROYECTO DE ORIGEN:\r\n{{1.project_origin}}\r\n\r\nCAMPAÑA:\r\n{{1.campaign_id}}\r\n\r\nHISTORIAL ANTERIOR:\r\n{{ifempty(1.history; \"Sin conversación anterior\")}}\r\n\r\nNUEVO MENSAJE:\r\n{{1.message}}\r\n\r\nContinúa la conversación usando el historial. No vuelvas a saludar ni a presentarte cuando exista conversación anterior. Haz solamente una pregunta por turno."
+              }
+            ]
+          }
+        ],
+        "generationConfig": {
+          "maxOutputTokens": 300,
+          "temperature": 0.4,
+          "responseModalities": [
+            "text"
+          ]
+        },
+        "system_instruction": {
+          "parts": [
+            {
+              "text": "Eres VIVI, la consultora virtual de ViviendAI: humana, cálida, breve y no invasiva. Tu misión es comprender si el cliente conserva interés en el proyecto de origen y conocer progresivamente dónde vive, dónde trabaja y qué sueña para su vivienda. Responde en máximo tres frases y haz una sola pregunta por turno. No solicites dirección exacta, información bancaria ni datos de centrales de riesgo. No prometas aprobación de crédito ni subsidio. Explica que el canal Instagram es una simulación cuando el usuario lo pregunte."
+            }
+          ]
+        }
+      },
+      "metadata": {
+        "designer": {
+          "x": 0,
+          "y": 0
+        },
+        "restore": {
+          "parameters": {
+            "__IMTCONN__": {
+              "label": "Daniel's Gemini AI connection"
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": 3,
+      "module": "datastore:AddRecord",
+      "version": 1,
+      "parameters": {
+        "datastore": 122651
+      },
+      "mapper": {
+        "key": "{{1.lead_id}}",
+        "overwrite": true,
+        "data": {
+          "history": "{{ifempty(1.history; \"\")}}\r\n\r\nUSUARIO: {{1.message}}\r\nVIVI: {{2.result}}",
+          "lead_id": "{{1.lead_id}}",
+          "project_origin": "{{1.project_origin}}",
+          "turn_count": "{{ifempty(1.turn_count; 0) + 1}}",
+          "profile_json": "{{ifempty(1.profile_json; \"{}\")}}",
+          "last_score": "{{ifempty(1.last_score; 0)}}",
+          "updated_at": "{{now}}"
+        }
+      },
+      "metadata": {
+        "designer": {
+          "x": 300,
+          "y": 0
+        },
+        "restore": {
+          "parameters": {
+            "datastore": {
+              "label": "ViviendAI_DATA"
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": 4,
+      "module": "gateway:WebhookRespond",
+      "version": 1,
+      "parameters": {},
+      "mapper": {
+        "status": "200",
+        "body": "{{2.result}}",
+        "headers": [
+          {
+            "key": "Content-Type",
+            "value": "text/plain; charset=utf-8"
+          }
+        ]
+      },
+      "metadata": {
+        "designer": {
+          "x": 600,
+          "y": 0
+        }
+      }
+    }
+  ],
+  "metadata": {
+    "instant": true,
+    "version": 1,
+    "scenario": {
+      "roundtrips": 1,
+      "maxErrors": 3,
+      "autoCommit": true,
+      "autoCommitTriggerLast": true,
+      "sequential": false,
+      "confidential": false,
+      "dataloss": false,
+      "dlq": false,
+      "freshVariables": false
+    },
+    "designer": {
+      "orphans": []
+    },
+    "zone": "us2.make.com",
+    "notes": []
+  }
+}
