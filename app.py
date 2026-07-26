@@ -440,6 +440,67 @@ st.markdown(
         .cat-hero { flex-direction:column;align-items:flex-start;gap:8px; }
         .cat-grid { grid-template-columns:repeat(2,1fr); }
     }
+    .ops-hero {
+        background:linear-gradient(135deg,#f5f0e8 0%,#fef9ef 100%);
+        border-radius:24px;padding:var(--space-3) var(--space-4);
+        margin:var(--space-2) 0 var(--space-3);
+        border:1px solid #e8dfd0;
+        display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;
+    }
+    .ops-hero h2 { margin:0;font-size:28px !important;color:#3d2e1a; }
+    .ops-hero p { margin:4px 0 0;font-size:14px;opacity:.7; }
+    .ops-grid {
+        display:grid;grid-template-columns:repeat(5,minmax(0,1fr));
+        gap:var(--space-2);margin:var(--space-2) 0 var(--space-3);
+    }
+    .ops-stat {
+        background:var(--white);border:1px solid #e2e7eb;
+        border-radius:18px;padding:var(--space-2) var(--space-3);
+        box-shadow:var(--shadow-soft);text-align:center;
+        transition:transform .2s,box-shadow .2s;
+    }
+    .ops-stat:hover { transform:translateY(-2px);box-shadow:0 14px 35px rgba(0,72,126,.14); }
+    .ops-stat-value {
+        display:block;font-size:26px;font-weight:900;color:#000;
+        line-height:1.1;letter-spacing:-.03em;
+    }
+    .ops-stat-label {
+        display:block;font-size:11px;font-weight:700;color:var(--graphite);
+        text-transform:uppercase;letter-spacing:.04em;margin-top:4px;
+    }
+    .ops-section-header {
+        display:flex;align-items:center;gap:10px;
+        margin:var(--space-3) 0 var(--space-2);
+    }
+    .ops-section-header h3 {
+        margin:0;font-size:20px !important;color:var(--graphite);
+    }
+    .ops-section-header span {
+        font-size:12px;color:var(--graphite);opacity:.55;
+    }
+    .ops-actions {
+        display:flex;flex-wrap:wrap;align-items:center;gap:var(--space-2);
+        margin:var(--space-2) 0 var(--space-3);
+    }
+    .ops-crm-card {
+        background:var(--white);border:1px solid #dfe6eb;
+        border-radius:20px;overflow:hidden;
+        box-shadow:var(--shadow-soft);margin:var(--space-2) 0 var(--space-3);
+    }
+    .ops-crm-header {
+        padding:var(--space-2) var(--space-3);
+        background:#f8fbfd;border-bottom:1px solid #dfe6eb;
+        font-weight:800;font-size:15px;color:var(--graphite);
+        display:flex;align-items:center;gap:10px;
+    }
+    .ops-crm-body {
+        padding:var(--space-3);
+        display:grid;grid-template-columns:1fr 1fr;gap:var(--space-3);
+    }
+    @media (max-width:768px) {
+        .ops-grid { grid-template-columns:repeat(2,1fr); }
+        .ops-crm-body { grid-template-columns:1fr; }
+    }
     .stage.active {
         background:#000;border-color:#000;color:#fff;
         box-shadow:inset 0 -6px 0 var(--col-yellow);
@@ -1556,12 +1617,51 @@ elif section == "Catálogo de proyectos":
 
 elif section == "Centro de operaciones":
     metrics = get_dashboard_metrics()
-    cols = st.columns(5)
-    cols[0].metric("Leads", metrics["total"])
-    cols[1].metric("Prioridad alta", metrics["hot"])
-    cols[2].metric("% prioridad alta", f"{metrics['conversion_rate']:.1f}%")
-    cols[3].metric("Duplicados", metrics["duplicates"])
-    cols[4].metric("CRM pendientes", metrics["crm_pending"])
+
+    # Hero + stat cards styled
+    st.markdown(
+        f"""
+        <div class="ops-hero">
+          <div>
+            <h2>📊 Centro de operaciones</h2>
+            <p>{metrics['total']} leads capturados · {metrics['hot']} de prioridad alta · {metrics['crm_pending']} pendientes de CRM</p>
+          </div>
+          <div style="text-align:right;font-size:13px;color:var(--graphite);opacity:.65;">
+            Datos actualizados en tiempo real
+          </div>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+
+    conv_color = "#16803a" if metrics['conversion_rate'] >= 10 else ("#b45309" if metrics['conversion_rate'] >= 5 else "#526273")
+    st.markdown(
+        f"""
+        <div class="ops-grid">
+          <div class="ops-stat">
+            <span class="ops-stat-value">{metrics['total']}</span>
+            <span class="ops-stat-label">Leads totales</span>
+          </div>
+          <div class="ops-stat">
+            <span class="ops-stat-value">{metrics['hot']}</span>
+            <span class="ops-stat-label" style="color:#16803a">Prioridad alta</span>
+          </div>
+          <div class="ops-stat">
+            <span class="ops-stat-value" style="color:{conv_color}">{metrics['conversion_rate']:.1f}%</span>
+            <span class="ops-stat-label">% prioridad alta</span>
+          </div>
+          <div class="ops-stat">
+            <span class="ops-stat-value">{metrics['duplicates']}</span>
+            <span class="ops-stat-label">Duplicados</span>
+          </div>
+          <div class="ops-stat">
+            <span class="ops-stat-value">{metrics['crm_pending']}</span>
+            <span class="ops-stat-label">CRM pendientes</span>
+          </div>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
 
     # Estado de persistencia global
     _op_storage = get_storage_status()
@@ -1581,7 +1681,15 @@ elif section == "Centro de operaciones":
         unsafe_allow_html=True,
     )
 
-    st.subheader("Bandeja comercial")
+    st.markdown(
+        """
+        <div class="ops-section-header">
+          <h3>📋 Bandeja comercial</h3>
+          <span>leads con scoring y prioridad VIVI</span>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
     leads = list_leads()
     if leads:
         df = pd.DataFrame(leads)
