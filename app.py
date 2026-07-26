@@ -1946,7 +1946,7 @@ elif section == "Centro de operaciones":
         with st.expander("Ver eventos técnicos de integración"):
             st.dataframe(events_df, width="stretch", hide_index=True)
 
-else:
+elif section == "Arquitectura y API":
     st.markdown(
         """
         <div class="arch-hero">
@@ -2232,3 +2232,6 @@ erDiagram
         """,
         unsafe_allow_html=True,
     )
+
+else:
+    st.error("La sección seleccionada no existe.")
