@@ -1373,22 +1373,56 @@ elif section == "Centro de operaciones":
     cols[3].metric("Duplicados", metrics["duplicates"])
     cols[4].metric("CRM pendientes", metrics["crm_pending"])
 
+    # Estado de persistencia global
+    _op_storage = get_storage_status()
+    if _op_storage.get("cloud_enabled"):
+        _op_persist_text = "SUPABASE + SQLITE"
+        _op_persist_class = "persistence-ok"
+    else:
+        _op_persist_text = "SOLO SQLITE"
+        _op_persist_class = "persistence-local"
+    st.markdown(
+        f"""
+        <div class="agent2-persistence">
+          <strong>Persistencia:</strong>
+          <span class="persistence-badge {_op_persist_class}">{html.escape(_op_persist_text)}</span>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+
     st.subheader("Bandeja comercial")
     leads = list_leads()
     if leads:
         df = pd.DataFrame(leads)
+        # Derivar ruta comercial desde propensity_score (determinístico, misma lógica que profiling_service)
+        def _derive_route(ps: float | None) -> str:
+            if ps is None or ps < 30:
+                return "NUTRICIÓN_DIGITAL"
+            if ps < 55:
+                return "PERTENECER"
+            if ps < 80:
+                return "COMPLETAR_PERFIL"
+            return "ASESOR_COMERCIAL"
+
+        df["propensity_route"] = df["propensity_score"].apply(
+            lambda v: _derive_route(v) if pd.notna(v) else "—"
+        )
+        # Score VIVI: usar propensity_score si existe, si no el score inicial
+        df["vivi_score"] = df["propensity_score"].fillna(df["score"]).astype(int)
+        df["vivi_priority"] = df["propensity_priority"].fillna(df["rating"])
+
         display_columns = {
             "lead_code": "Código",
             "full_name": "Nombre",
             "income_range": "Ingresos",
-            "affiliation_type": "Afiliación",
             "preferred_project": "Proyecto",
+            "vivi_score": "Score VIVI",
+            "vivi_priority": "Prioridad VIVI",
+            "propensity_route": "Ruta",
+            "crm_status": "CRM",
             "utm_source": "Fuente",
             "purchase_horizon": "Horizonte",
-            "score": "Puntaje",
-            "rating": "Prioridad",
-            "crm_status": "Salesforce",
-            "funnel_status": "Etapa CRM",
             "created_at": "Capturado",
         }
         commercial_df = (
@@ -1402,12 +1436,13 @@ elif section == "Centro de operaciones":
             width="stretch",
             hide_index=True,
             column_config={
-                "Puntaje": st.column_config.ProgressColumn(
+                "Score VIVI": st.column_config.ProgressColumn(
                     "Score VIVI", min_value=0, max_value=100, format="%d/100"
                 ),
                 "Código": st.column_config.TextColumn(width="small"),
                 "Nombre": st.column_config.TextColumn(width="medium"),
                 "Proyecto": st.column_config.TextColumn(width="medium"),
+                "Ruta": st.column_config.TextColumn(width="medium"),
             },
         )
         pending = [lead for lead in leads if lead["crm_status"] != "SYNCED"]
